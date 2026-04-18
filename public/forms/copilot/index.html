@@ -159,6 +159,15 @@
       body{background:#fff}
       .panel,.question,.summary-box{box-shadow:none}
     }
+
+    .submit-panel{margin-top:16px;border:1px solid #c8d5f0;background:#f7faff;border-radius:16px;padding:16px}
+    .submit-panel h3{margin:0 0 10px}
+    .submit-note{font-size:14px;color:var(--muted);margin:8px 0 0}
+    .submit-status{margin-top:10px;font-weight:650}
+    .submit-status.ok{color:var(--good)}
+    .submit-status.err{color:var(--bad)}
+    .netlify-hidden{position:absolute!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;height:1px!important;width:1px!important;margin:-1px!important;padding:0!important;border:0!important}
+
   </style>
 </head>
 <body>
@@ -259,7 +268,18 @@
     </div>
   </div>
 
-  <form id="copilotForm">
+  <form id="copilotForm" name="copilot-integration-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/">
+    <input type="hidden" name="form-name" value="copilot-integration-v1">
+    <input type="hidden" name="subject" data-remove-prefix value="Copilot-Fragebogen – %{submissionId}">
+    <input type="hidden" name="form_id" value="copilot-integration-v1">
+    <input type="hidden" name="submitted_at" id="netlifySubmittedAt" value="">
+    <input type="hidden" name="assessment_status" id="netlifyAssessmentStatus" value="">
+    <input type="hidden" name="assessment_path" id="netlifyAssessmentPath" value="">
+    <input type="hidden" name="markdown_export" id="netlifyMarkdown" value="">
+    <input type="hidden" name="json_export" id="netlifyJson" value="">
+    <p class="netlify-hidden">
+      <label>Nicht ausfüllen, wenn du ein Mensch bist: <input name="bot-field" type="text" tabindex="-1" autocomplete="off"></label>
+    </p>
 
     <!-- STEP A -->
     <section class="step active" data-step="0">
@@ -293,10 +313,10 @@
           </div>
         </div>
 
-        <div class="question" data-name="contact_email" data-label="E-Mail des Antwortgebers">
-          <div class="q-label"><strong>E-Mail des Antwortgebers</strong></div>
-          <input type="text" name="contact_email" placeholder="optional, z. B. name@firma.de">
-          <div class="q-help">Optional für Rückfragen oder eine Kopie der Einsendung. Die Auswertung geht an fragebogen@hohl.rocks.</div>
+        <div class="question" data-name="email" data-label="E-Mail für Rückfragen">
+          <div class="q-label"><strong>E-Mail für Rückfragen</strong></div>
+          <input type="email" name="email" placeholder="z. B. fragebogen@hohl.rocks">
+          <div class="q-help">Optional. Netlify nutzt dieses Feld als Reply-to in der Formularbenachrichtigung.</div>
         </div>
 
         <div class="question" data-name="copilot_goal" data-label="Was ist das Zielbild?" data-required="true">
@@ -1012,22 +1032,18 @@
       </div>
 
       <div class="submit-panel">
-        <h3>Antworten direkt an Hohl senden</h3>
-        <p class="muted" style="margin:0">Die Angaben werden an <strong>fragebogen@hohl.rocks</strong> gesendet. Zusätzlich bleiben Markdown- und JSON-Export als Fallback erhalten.</p>
-        <input type="text" id="website" name="website" autocomplete="off" tabindex="-1" class="hidden" aria-hidden="true">
-        <label class="consent-line">
-          <input type="checkbox" id="sendConsent">
-          <span>Ich bin einverstanden, dass die Angaben zur Auswertung des Fragebogens verarbeitet und per E-Mail an Hohl übermittelt werden. Bitte keine Passwörter, Tokens oder vertraulichen Kundengeheimnisse eintragen.</span>
+        <h3>Antworten absenden</h3>
+        <p class="submit-note">Die Antworten werden über Netlify Forms verarbeitet und an die für diese Site eingerichtete Formularbenachrichtigung gesendet. JSON- und Markdown-Export bleiben zusätzlich als Fallback erhalten.</p>
+        <label class="choice" style="margin-top:10px">
+          <input type="checkbox" id="submitConsent" name="consent" value="ja">
+          <span>Ich bin einverstanden, dass die Angaben zur Erstellung der Copilot-Integrationsstrategie verarbeitet und per Formularbenachrichtigung übermittelt werden.</span>
         </label>
-        <label class="consent-line">
-          <input type="checkbox" id="sendCopy">
-          <span>Optional: Kopie an die oben angegebene E-Mail-Adresse senden.</span>
-        </label>
-        <div class="submit-row">
-          <button type="button" class="primary" id="submitServerBtn" onclick="submitQuestionnaire()">Antworten absenden</button>
-          <span class="small">Endpoint: /api/submit</span>
+        <div class="controls">
+          <button type="button" class="primary" onclick="submitNetlifyForm()">Antworten absenden</button>
+          <button type="button" class="soft" onclick="exportMarkdown()">Markdown exportieren</button>
+          <button type="button" class="soft" onclick="exportJson()">JSON exportieren</button>
         </div>
-        <div id="submitStatus" class="server-status">Noch nicht gesendet.</div>
+        <div id="submitStatus" class="submit-status" aria-live="polite"></div>
       </div>
 
       <div class="footer-note">
@@ -1051,9 +1067,6 @@
 
 <script>
 const STORAGE_KEY = "copilot_integrationsfragebogen_v1";
-const FORM_ID = "copilot-integration-v1";
-const FORM_TITLE = "Copilot-Integrationsfragebogen";
-const SUBMIT_ENDPOINT = "/api/submit";
 
 const steps = Array.from(document.querySelectorAll(".step"));
 const stepTabs = Array.from(document.querySelectorAll(".step-tab"));
@@ -1214,7 +1227,7 @@ function formatAnswer(val){
   return val && String(val).trim() ? String(val).trim() : "—";
 }
 
-function buildMarkdownExport(){
+function buildMarkdown(){
   const data = collectFormData();
   const sections = [
     {title: "Teil A – Sofortstart", step: 0},
@@ -1250,64 +1263,60 @@ function buildMarkdownExport(){
 }
 
 function exportMarkdown(){
-  downloadText("copilot-fragebogen-antworten.md", buildMarkdownExport(), "text/markdown;charset=utf-8");
+  downloadText("copilot-fragebogen-antworten.md", buildMarkdown(), "text/markdown;charset=utf-8");
 }
 
-function setSubmitStatus(text, type){
-  const el = document.getElementById("submitStatus");
-  if(!el) return;
-  el.textContent = text;
-  el.className = "server-status" + (type ? " " + type : "");
-}
-
-async function submitQuestionnaire(){
-  const required = getRequiredQuestions();
-  const missing = required.filter(q => !isAnswered(q)).map(q => q.dataset.label);
-  if(missing.length){
-    alert("Bitte zuerst die Pflichtfelder ausfüllen:\n\n- " + missing.slice(0, 8).join("\n- ") + (missing.length > 8 ? "\n…" : ""));
-    return;
-  }
-  const consent = document.getElementById("sendConsent")?.checked;
-  if(!consent){
-    alert("Bitte vor dem Absenden die Einwilligung aktivieren.");
-    return;
-  }
-
+function fillNetlifyHiddenFields(){
   const data = collectFormData();
-  const payload = {
-    formId: FORM_ID,
-    formTitle: FORM_TITLE,
-    submittedAt: new Date().toISOString(),
-    sourceUrl: window.location.href,
-    consent: true,
-    sendCopy: !!document.getElementById("sendCopy")?.checked,
-    honeypot: document.getElementById("website")?.value || "",
-    respondentEmail: data.answers.contact_email || "",
-    respondentName: data.answers.contact_name || "",
-    organization: data.answers.org_name || "",
-    markdown: buildMarkdownExport(),
-    data
-  };
+  const markdown = buildMarkdown();
+  document.getElementById("netlifySubmittedAt").value = new Date().toISOString();
+  document.getElementById("netlifyAssessmentStatus").value = data.assessment.statusLabel || "";
+  document.getElementById("netlifyAssessmentPath").value = data.assessment.path || "";
+  document.getElementById("netlifyMarkdown").value = markdown;
+  document.getElementById("netlifyJson").value = JSON.stringify(data, null, 2);
+}
 
-  const btn = document.getElementById("submitServerBtn");
-  if(btn) btn.disabled = true;
-  setSubmitStatus("Sende Antworten …", "");
+async function submitNetlifyForm(){
+  const status = document.getElementById("submitStatus");
+  const consent = document.getElementById("submitConsent");
+  status.className = "submit-status";
+  status.textContent = "";
 
+  const missing = getRequiredQuestions().filter(q => {
+    const v = questionValue(q);
+    return Array.isArray(v) ? v.length === 0 : !v;
+  });
+  if(missing.length){
+    status.className = "submit-status err";
+    status.textContent = "Bitte zuerst die Pflichtfelder ausfüllen. Offene Pflichtfelder: " + missing.map(q => q.dataset.label).slice(0,5).join("; ") + (missing.length > 5 ? " …" : "");
+    return;
+  }
+
+  if(!consent.checked){
+    status.className = "submit-status err";
+    status.textContent = "Bitte die Einwilligung zum Absenden bestätigen.";
+    return;
+  }
+
+  fillNetlifyHiddenFields();
+  saveLocal();
+
+  const form = document.getElementById("copilotForm");
+  const body = new URLSearchParams(new FormData(form)).toString();
+
+  status.textContent = "Wird gesendet …";
   try{
-    const res = await fetch(SUBMIT_ENDPOINT, {
+    const response = await fetch("/", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(payload)
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
+      body
     });
-    const result = await res.json().catch(() => ({}));
-    if(!res.ok || !result.ok){
-      throw new Error(result.message || "Serverantwort war nicht erfolgreich.");
-    }
-    setSubmitStatus("Gesendet. Referenz: " + (result.reference || "ohne Referenz"), "ok");
+    if(!response.ok){ throw new Error("HTTP " + response.status); }
+    status.className = "submit-status ok";
+    status.textContent = "Gesendet. Die Antworten wurden über Netlify Forms übermittelt.";
   }catch(err){
-    setSubmitStatus("Senden fehlgeschlagen: " + err.message + " – bitte Markdown oder JSON exportieren und manuell mailen.", "bad");
-  }finally{
-    if(btn) btn.disabled = false;
+    status.className = "submit-status err";
+    status.textContent = "Senden fehlgeschlagen. Bitte Markdown oder JSON exportieren und manuell weiterleiten. Fehler: " + err.message;
   }
 }
 
