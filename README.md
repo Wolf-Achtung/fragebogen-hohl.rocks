@@ -1,20 +1,22 @@
-# Mail-only Copilot-Fragebogen
+# Netlify Forms 404 Fix
 
-Dieses Paket ersetzt die alte Copilot-Fragebogenseite.
+Dieses Paket behebt den HTTP-404 beim Testmail-Button.
 
-Zieldatei:
-`public/forms/copilot/index.html`
+Änderungen:
+- Kein AJAX-POST mehr auf `/`.
+- Der Button nutzt jetzt eine normale HTML-Formularübermittlung an `/danke/`.
+- `public/index.html` enthält zusätzlich ein verstecktes Netlify-Detection-Formular für `copilot-integration-v1`.
 
-Wichtig:
-- Keine Browser-Speicherung
-- Keine sichtbaren JSON-/Markdown-Exportbuttons
-- Netlify Forms Formularname: `copilot-integration-v1`
-- Testbutton: `Testmail senden`
-- Mailinhalt enthält `chatgpt_zusammenfassung`
+Einbau:
+1. `public/forms/copilot/index.html` ersetzen.
+2. `public/index.html` übernehmen oder mit vorhandenem Startseiten-Code zusammenführen.
+3. `public/danke/index.html` übernehmen.
+4. Deploy auslösen.
+5. In Netlify: Forms → Active forms prüfen.
+6. `copilot-integration-v1` muss dort erscheinen.
+7. Notification an `fragebogen@hohl.rocks` setzen.
+8. Testmail senden.
 
-Nach Upload:
-1. Netlify Deploy abwarten.
-2. URL öffnen: `/forms/copilot/?v=mailonly-final`
-3. Prüfen, ob oben `Mail-only-Version` steht.
-4. `Testmail senden` klicken.
-5. Netlify Forms und Postfach prüfen.
+Wenn weiterhin 404 kommt:
+- Netlify → Forms → Enable form detection aktivieren.
+- Danach „Clear cache and deploy site“ ausführen.
