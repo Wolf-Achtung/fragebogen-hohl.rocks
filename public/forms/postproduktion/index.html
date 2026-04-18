@@ -11,11 +11,10 @@
   <div class="hero">
     <div class="eyebrow">Weg B · Postproduktion · lokaler Pilot</div>
     <h1>Lokale Postproduktions-KI im Büro</h1>
-    <p class="lead">Ein kurzer Orientierungsfragebogen für Videoanalyse, Timecode-Clips, Transkription, Selects, Social-Cutdowns und einen lokalen Mac-mini-Pilot im Büro.</p>
+    <p class="lead">Kurzer Orientierungsfragebogen für einen lokalen KI-Pilot in der Postproduktion: Videoanalyse, Timecode-Clips, Transkription, Selects, Social-Cutdowns und Offline-Betrieb im Büro.</p>
     <div class="notice"><strong>Damit es leicht und vertraulich bleibt:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen. Projekt-Aliase reichen völlig.</div>
     <nav class="nav" aria-label="Formularnavigation">
-      <a href="/forms/copilot/">Weg A: Office-KI</a>
-      <a href="/forms/postproduktion/">Weg B: Postproduktions-KI</a>
+      <a href="/">← Zur Auswahl der beiden Wege</a>
     </nav>
   </div>
 </header>
@@ -24,7 +23,7 @@
 <form name="postproduktion-ki-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="postForm" data-questionnaire="true" data-form-type="postproduktion">
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="postproduktion-ki-v1">
-  <input type="hidden" name="form_version" value="postproduktion-ki-v1">
+  <input type="hidden" name="form_version" value="postproduktion-ki-v1-weiche">
   <input type="hidden" name="subject" data-remove-prefix value="Weg B Postproduktions-KI %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_pilot_clarity">
@@ -42,12 +41,7 @@
     <summary>Teil A – Was soll der lokale Pilot zuerst leisten?</summary>
     <div class="details-body">
       <p class="section-hint">Dieser Teil reicht für eine erste praktische Empfehlung: wichtigste Aufgaben, gewünschte Ergebnisse, Materialarten, Offline-Umgang und Erfolgskriterien.</p>
-
-      <label class="field-label" for="email">E-Mail für Rückfragen</label>
-      <input id="email" name="email" type="email" placeholder="optional, z. B. name@firma.de">
-      <p class="help">Optional. Hilft nur, falls eine kurze Rückfrage nötig ist.</p>
-
-      <fieldset>
+<fieldset>
         <legend>Welche 2–3 Aufgaben sollen im Pilot zuerst spürbar helfen? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="top_use_cases" value="Szenen-/Shot-Erkennung"> Szenen-/Shot-Erkennung</label>

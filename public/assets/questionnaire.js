@@ -61,7 +61,6 @@
   }
 
   function evaluateCopilot(form) {
-    const contactEmail = text(form, "email");
     const mode = getRadio(form, "target_mode");
     const groups = getAll(form, "pilot_groups");
     const pilotSize = getRadio(form, "pilot_size");
@@ -139,7 +138,6 @@
     const summary = cleanLines([
       "PROJEKT",
       "Weg A – Office-KI mit Microsoft Copilot",
-      `Kontakt: ${contactEmail || "—"}`,
       "Formular: copilot-integration-v1",
       "Version: copilot-integration-v2",
       "",
@@ -153,10 +151,10 @@
       "KURZ ZU KLÄREN",
       blockers.map(x => `- ${x}`).join("\n"),
       "",
-      "OFFENE PUNKTE",
+      "NOCH OFFEN",
       unknowns.map(x => `- ${x}`).join("\n"),
       "",
-      "NÄCHSTE SCHRITTE",
+      "NÄCHSTE SINNVOLLE SCHRITTE",
       next.map(x => `- ${x}`).join("\n"),
       "",
       "ZIELBILD",
@@ -206,7 +204,6 @@
   }
 
   function evaluatePost(form) {
-    const contactEmail = text(form, "email");
     const useCases = getAll(form, "top_use_cases");
     const mainOutput = getRadio(form, "main_output");
     const materialTypes = getAll(form, "material_types");
@@ -297,7 +294,6 @@
     const summary = cleanLines([
       "PROJEKT",
       "Weg B – Lokale Postproduktions-KI im Büro",
-      `Kontakt: ${contactEmail || "—"}`,
       "Formular: postproduktion-ki-v1",
       "Version: postproduktion-ki-v1",
       "",
@@ -311,10 +307,10 @@
       "KURZ ZU KLÄREN",
       blockers.map(x => `- ${x}`).join("\n"),
       "",
-      "OFFENE PUNKTE",
+      "NOCH OFFEN",
       unknowns.map(x => `- ${x}`).join("\n"),
       "",
-      "NÄCHSTE SCHRITTE",
+      "NÄCHSTE SINNVOLLE SCHRITTE",
       next.map(x => `- ${x}`).join("\n"),
       "",
       "PILOTZIEL",

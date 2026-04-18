@@ -11,11 +11,10 @@
   <div class="hero">
     <div class="eyebrow">Weg A · Office-KI · Microsoft 365</div>
     <h1>Office-KI mit Microsoft Copilot</h1>
-    <p class="lead">Ein kurzer Orientierungsfragebogen für E-Mail, Teams, Texte, Meetings und Organisation. Teil A reicht für eine erste pragmatische Empfehlung; die weiteren Teile helfen, den Start sauber vorzubereiten.</p>
+    <p class="lead">Kurzer Orientierungsfragebogen für Office, Outlook, Teams, Meetings, Textarbeit und Organisation. Ziel ist eine schnelle Einschätzung: möglicher Startweg, Pilotgruppe, offene Punkte und nächste Schritte.</p>
     <div class="notice"><strong>Damit es leicht und vertraulich bleibt:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte oder personenbezogenen Details eintragen. Rollen, Projekttypen oder Aliase reichen völlig.</div>
     <nav class="nav" aria-label="Formularnavigation">
-      <a href="/forms/copilot/">Weg A: Office-KI</a>
-      <a href="/forms/postproduktion/">Weg B: Postproduktions-KI</a>
+      <a href="/">← Zur Auswahl der beiden Wege</a>
     </nav>
   </div>
 </header>
@@ -24,7 +23,7 @@
 <form name="copilot-integration-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="copilotForm" data-questionnaire="true" data-form-type="copilot">
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="copilot-integration-v1">
-  <input type="hidden" name="form_version" value="copilot-integration-v2-soft">
+  <input type="hidden" name="form_version" value="copilot-integration-v2-weiche">
   <input type="hidden" name="subject" data-remove-prefix value="Weg A Office-KI %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_readiness">
@@ -42,12 +41,7 @@
     <summary>Teil A – Was soll Office-KI zuerst verbessern?</summary>
     <div class="details-body">
       <p class="section-hint">Dieser Teil reicht bereits für eine erste Empfehlung: welcher Einstieg sinnvoll ist, wer testen sollte und was vorher kurz geklärt werden muss.</p>
-
-      <label class="field-label" for="email">E-Mail für Rückfragen</label>
-      <input id="email" name="email" type="email" placeholder="optional, z. B. name@firma.de">
-      <p class="help">Optional. Hilft nur, falls eine kurze Rückfrage nötig ist.</p>
-
-      <fieldset>
+<fieldset>
         <legend>Welcher Einstieg fühlt sich für die nächsten 3–6 Monate passend an? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="target_mode" value="Sicherer KI-Chat als Einstieg"> Sicherer KI-Chat als Einstieg</label>
