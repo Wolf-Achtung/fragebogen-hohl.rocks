@@ -1,23 +1,28 @@
-# Mail- und DNS-Checkliste für fragebogen@hohl.rocks
+# Mail-Checkliste für fragebogen@hohl.rocks
 
-## Muss vor Livegang geprüft werden
+## Benötigte Angaben
 
-1. Existiert die Mailbox `fragebogen@hohl.rocks`?
-2. Sind SMTP-Server, Port, Verschlüsselung und Passwort bekannt?
-3. Darf der Webserver per SMTP über diese Mailbox senden?
-4. Ist HTTPS für `fragebogen.hohl.rocks` aktiv?
-5. Gibt es SPF für `hohl.rocks`?
-6. Gibt es DKIM für `hohl.rocks`?
-7. Gibt es DMARC für `_dmarc.hohl.rocks`?
-8. Werden Mails an externe Adressen zugestellt oder landen sie im Spam?
-9. Ist die Subdomain nicht öffentlich indexierbar?
-10. Gibt es einen kurzen Datenschutzhinweis auf der Seite?
+- SMTP_HOST
+- SMTP_PORT, meistens 587/TLS oder 465/SSL
+- SMTP_USER = fragebogen@hohl.rocks
+- SMTP_PASS
+- MAIL_TO = fragebogen@hohl.rocks
+- MAIL_FROM = fragebogen@hohl.rocks
 
-## Empfehlung für die ersten Tests
+## Zustellbarkeit
 
-- Test 1: Absenden an `fragebogen@hohl.rocks`.
-- Test 2: Absenden mit Kopie an eine externe Adresse.
-- Test 3: Antwort auf die empfangene Mail prüfen – Reply-To sollte auf den Antwortgeber zeigen.
-- Test 4: Mail-Header prüfen: SPF, DKIM, DMARC sollten bestehen.
-- Test 5: Formular ohne Einwilligung absenden – muss blockieren.
-- Test 6: Honeypot füllen – muss blockieren.
+Für sauberen Versand sollten SPF, DKIM und DMARC für `hohl.rocks` korrekt gesetzt sein.
+
+## Funktionstest
+
+1. Netlify Environment Variables setzen.
+2. Deploy auslösen.
+3. Fragebogen absenden.
+4. Eingang bei `fragebogen@hohl.rocks` prüfen.
+5. Spam-Ordner prüfen.
+6. Mail-Header auf SPF/DKIM/DMARC prüfen.
+7. Bei Fehlern Netlify Function Logs öffnen.
+
+## Keine Secrets im Code
+
+SMTP-Passwörter gehören nur in Netlify Environment Variables und niemals in das Repository oder in Chat-Verläufe.
