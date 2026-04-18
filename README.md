@@ -1,22 +1,52 @@
-# Netlify Forms 404 Fix
+# Fragebogen-MVP für Netlify Forms
 
-Dieses Paket behebt den HTTP-404 beim Testmail-Button.
+Dieses Paket enthält eine sofort nutzbare MVP-Struktur für:
 
-Änderungen:
-- Kein AJAX-POST mehr auf `/`.
-- Der Button nutzt jetzt eine normale HTML-Formularübermittlung an `/danke/`.
-- `public/index.html` enthält zusätzlich ein verstecktes Netlify-Detection-Formular für `copilot-integration-v1`.
+- `public/forms/copilot/index.html`
+- `public/forms/postproduktion/index.html`
+- `public/danke/index.html`
+- `public/assets/forms.css`
+- `public/assets/questionnaire.js`
 
-Einbau:
-1. `public/forms/copilot/index.html` ersetzen.
-2. `public/index.html` übernehmen oder mit vorhandenem Startseiten-Code zusammenführen.
-3. `public/danke/index.html` übernehmen.
-4. Deploy auslösen.
-5. In Netlify: Forms → Active forms prüfen.
-6. `copilot-integration-v1` muss dort erscheinen.
-7. Notification an `fragebogen@hohl.rocks` setzen.
-8. Testmail senden.
+## Formularnamen
 
-Wenn weiterhin 404 kommt:
-- Netlify → Forms → Enable form detection aktivieren.
-- Danach „Clear cache and deploy site“ ausführen.
+Copilot:
+`copilot-integration-v1`
+
+Postproduktion:
+`postproduktion-ki-v1`
+
+Beim Copilot-Fragebogen bleibt der bestehende Formularname bewusst erhalten. Die neue Version wird über ein Hidden Field abgebildet:
+
+`form_version = copilot-integration-v2`
+
+Das reduziert das Risiko, dass Netlify ein neues Formular ohne Benachrichtigungskonfiguration erzeugt.
+
+## Netlify-Check nach Deploy
+
+1. Netlify → Forms → prüfen, ob beide Formulare erkannt wurden.
+2. Falls nicht: Forms → Enable form detection.
+3. Deploys → Trigger deploy → Clear cache and deploy site.
+4. Project configuration → Notifications → Form submission notifications.
+5. Empfänger direkt: `wolf@hohl.rocks`
+6. Nicht über Weiterleitung `fragebogen@hohl.rocks`.
+
+## Test
+
+1. Beide Formulare mit Testdaten absenden.
+2. Prüfen:
+   - Submission im Netlify Forms Dashboard vorhanden
+   - Mail kommt bei `wolf@hohl.rocks` an
+   - `chatgpt_summary` ist enthalten
+   - `auto_route`, Ampeln, Blocker und nächste Schritte sind enthalten
+
+## Datenschutz
+
+Keine Uploadfelder verwenden. Keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen lassen.
+
+## Ergänzungen in dieser MVP-Fassung
+
+- Honeypot-Feld für Netlify-Spamfilter ist in beiden Formularen enthalten.
+- Custom Subject ist versioniert im HTML gesetzt.
+- Optionale E-Mail-Adresse setzt Netlify Reply-to.
+- Pflicht-Checkboxgruppen werden per JavaScript vor dem Submit geprüft.
