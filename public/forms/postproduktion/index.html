@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lokale Postproduktions-KI – Fragebogen</title>
+  <link rel="stylesheet" href="/assets/forms.css">
+</head>
+<body>
+<header>
+  <div class="hero">
+    <div class="eyebrow">KI-Fragebogen · Postproduktion · Offline-Pilot</div>
+    <h1>Lokales Postproduktions-KI-System</h1>
+    <p class="lead">Geführter Fragebogen für einen lokalen Mac-mini-Pilot: Videoanalyse, Timecode-Clips, Transkription, Quote-Findung, Social-Cutdowns, Layout-VO und spätere Avid-Brücken.</p>
+    <div class="notice"><strong>Wichtig:</strong> Bitte keine vertraulichen Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen. Verwenden Sie Projekt-Aliase.</div>
+    <nav class="nav" aria-label="Formularnavigation">
+      <a href="/forms/copilot/">Copilot</a>
+      <a href="/forms/postproduktion/">Postproduktion-KI</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<form name="postproduktion-ki-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="postForm" data-questionnaire="true" data-form-type="postproduktion">
+  <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
+  <input type="hidden" name="form-name" value="postproduktion-ki-v1">
+  <input type="hidden" name="form_version" value="postproduktion-ki-v1">
+  <input type="hidden" name="subject" data-remove-prefix value="Postproduktions-KI-Fragebogen %{submissionId}">
+  <input type="hidden" name="auto_route">
+  <input type="hidden" name="auto_pilot_clarity">
+  <input type="hidden" name="auto_workflow_fit">
+  <input type="hidden" name="auto_operations">
+  <input type="hidden" name="auto_calibration">
+  <textarea name="auto_blockers" hidden></textarea>
+  <textarea name="auto_unknowns" hidden></textarea>
+  <textarea name="auto_next_steps" hidden></textarea>
+  <textarea name="chatgpt_summary" hidden></textarea>
+
+  <div class="assessment" aria-live="polite"></div>
+
+  <details open>
+    <summary>Teil A – Sofortstart / Pilotfähigkeit</summary>
+    <div class="details-body">
+      <p class="section-hint">Dieser Teil reicht für eine erste Pilot-Roadmap: Hardwarebild, Offline-Modell, Toolstack-Reihenfolge, Output-Definition und Erfolgskriterien.</p>
+
+      <label class="field-label" for="email">E-Mail für Rückfragen</label>
+      <input id="email" name="email" type="email" placeholder="optional, z. B. name@firma.de">
+      <p class="help">Optional. Hilft, falls eine Rückfrage zur Submission nötig ist.</p>
+
+      <fieldset>
+        <legend>Welche 2–3 Use Cases sollen im Pilot zwingend funktionieren? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Szenen-/Shot-Erkennung"> Szenen-/Shot-Erkennung</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Bild-/Ton-basierte Selektion"> Bild-/Ton-basierte Selektion</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Review-Reel mit Source-Timecode"> Review-Reel mit eingebranntem Source-Timecode</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Select-Clips mit Handles"> Select-Clips mit Handles</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Transkript mit Timecode"> Transkript mit Timecode</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="One-Liner-/Quote-Findung"> One-Liner-/Quote-Findung</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Sprecher-/Dialoganalyse"> Sprecher-/Dialoganalyse</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Social-Cutdown-Vorschläge"> Social-Cutdown-Vorschläge</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Script-/Drehbuchanalyse"> Script-/Drehbuchanalyse</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Layout-VO"> Layout-VO</label>
+          <label class="option"><input type="checkbox" name="top_use_cases" value="Kontaktbogen mit Stills"> Kontaktbogen mit Stills</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welcher Output ist im Pilot am wichtigsten? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="main_output" value="Review-Reel"> Review-Reel</label>
+          <label class="option"><input type="radio" name="main_output" value="Select-Clips"> Select-Clips</label>
+          <label class="option"><input type="radio" name="main_output" value="CSV/Excel-Liste"> CSV/Excel-Liste</label>
+          <label class="option"><input type="radio" name="main_output" value="Transkript"> Transkript</label>
+          <label class="option"><input type="radio" name="main_output" value="Quote-Liste"> Quote-Liste</label>
+          <label class="option"><input type="radio" name="main_output" value="Social-Cutdown-Vorschläge"> Social-Cutdown-Vorschläge</label>
+          <label class="option"><input type="radio" name="main_output" value="Layout-VO"> Layout-VO</label>
+          <label class="option"><input type="radio" name="main_output" value="Scriptanalyse"> Scriptanalyse</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Materialarten sollen verarbeitet werden? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="material_types" value="ProRes"> ProRes</label>
+          <label class="option"><input type="checkbox" name="material_types" value="H.264/H.265"> H.264/H.265</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Avid-Proxies"> Avid-Proxies</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Rohmaterial"> Rohmaterial</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Fertige Trailer"> Fertige Trailer</label>
+          <label class="option"><input type="checkbox" name="material_types" value="WAV/AIFF/Audio-Stems"> WAV/AIFF/Audio-Stems</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Untertitel"> Untertitel</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Drehbücher"> Drehbücher</label>
+          <label class="option"><input type="checkbox" name="material_types" value="Transkripte"> Transkripte</label>
+        </div>
+      </fieldset>
+
+      <label class="field-label" for="project_size">Wie groß ist ein typisches Testprojekt? <span class="required-note">Pflicht</span></label>
+      <p class="help">Bitte grob: Materiallaufzeit, Anzahl Dateien, typische Dateigröße, Sprachen, Versionen.</p>
+      <textarea id="project_size" name="project_size" required></textarea>
+
+      <fieldset>
+        <legend>Wie offline muss das System nach Einrichtung sein? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="offline_model" value="Vollständig offline"> Vollständig offline</label>
+          <label class="option"><input type="radio" name="offline_model" value="Offline bei Kundendaten, online nur nach Löschung für Updates"> Offline bei Kundendaten, online nur nach Löschung für Updates</label>
+          <label class="option"><input type="radio" name="offline_model" value="Kontrolliertes Staging"> Kontrolliertes Staging</label>
+          <label class="option"><input type="radio" name="offline_model" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie werden Ergebnisse geprüft?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="review_process" value="Direkt am Mac"> Direkt am Mac</label>
+          <label class="option"><input type="checkbox" name="review_process" value="Per Stick/SSD"> Per Stick/SSD</label>
+          <label class="option"><input type="checkbox" name="review_process" value="Durch Editor"> Durch Editor</label>
+          <label class="option"><input type="checkbox" name="review_process" value="Durch PM"> Durch PM</label>
+          <label class="option"><input type="checkbox" name="review_process" value="Durch Creative Director"> Durch Creative Director</label>
+          <label class="option"><input type="checkbox" name="review_process" value="Durch Geschäftsführung"> Durch Geschäftsführung</label>
+        </div>
+      </fieldset>
+
+      <label class="field-label" for="success_owner">Wer bewertet den Erfolg? <span class="required-note">Pflicht</span></label>
+      <input id="success_owner" name="success_owner" type="text" required placeholder="Name oder Rolle">
+
+      <label class="field-label" for="reference_projects">Welche 2–3 Referenzprojekte stehen bereit? <span class="required-note">Pflicht</span></label>
+      <p class="help">Bitte nur Alias/Projekttyp, keine Kundennamen oder unveröffentlichten Titel.</p>
+      <textarea id="reference_projects" name="reference_projects" required></textarea>
+
+      <label class="field-label" for="success_criteria">Was wäre nach 4–6 Wochen ein Erfolg? <span class="required-note">Pflicht</span></label>
+      <textarea id="success_criteria" name="success_criteria" required></textarea>
+    </div>
+  </details>
+
+  <details>
+    <summary>Teil B – Workflow / Postproduktion</summary>
+    <div class="details-body">
+      <p class="section-hint">Dieser Teil klärt den Anschluss an den echten Postproduktionsalltag: Avid, Proxies, Timecode, Austauschformate, Review und Übergabe.</p>
+
+      <fieldset>
+        <legend>Welche Schnittsysteme sind im Einsatz? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="nle_tools" value="Avid Media Composer"> Avid Media Composer</label>
+          <label class="option"><input type="checkbox" name="nle_tools" value="DaVinci Resolve"> DaVinci Resolve</label>
+          <label class="option"><input type="checkbox" name="nle_tools" value="Adobe Premiere"> Adobe Premiere</label>
+          <label class="option"><input type="checkbox" name="nle_tools" value="Final Cut Pro"> Final Cut Pro</label>
+          <label class="option"><input type="checkbox" name="nle_tools" value="Andere"> Andere</label>
+        </div>
+      </fieldset>
+
+      <label class="field-label" for="avid_versions">Welche Avid-Versionen werden genutzt?</label>
+      <input id="avid_versions" name="avid_versions" type="text">
+
+      <fieldset>
+        <legend>Gibt es einen Proxy-Workflow? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="proxy_workflow" value="Ja, standardisiert"> Ja, standardisiert</label>
+          <label class="option"><input type="radio" name="proxy_workflow" value="Ja, projektabhängig"> Ja, projektabhängig</label>
+          <label class="option"><input type="radio" name="proxy_workflow" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="proxy_workflow" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Timecode-Basis ist relevant? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="timecode_basis" value="Source-TC"> Source-TC</label>
+          <label class="option"><input type="radio" name="timecode_basis" value="Timeline-TC"> Timeline-TC</label>
+          <label class="option"><input type="radio" name="timecode_basis" value="Beides"> Beides</label>
+          <label class="option"><input type="radio" name="timecode_basis" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Clip-Handles sind sinnvoll?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="clip_handles" value="1 Sekunde"> 1 Sekunde</label>
+          <label class="option"><input type="radio" name="clip_handles" value="2 Sekunden"> 2 Sekunden</label>
+          <label class="option"><input type="radio" name="clip_handles" value="5 Sekunden"> 5 Sekunden</label>
+          <label class="option"><input type="radio" name="clip_handles" value="10 Sekunden"> 10 Sekunden</label>
+          <label class="option"><input type="radio" name="clip_handles" value="Projektabhängig"> Projektabhängig</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Austauschformate sind in Phase 1 realistisch? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="CSV/Excel"> CSV/Excel</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="Review-Reel"> Review-Reel</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="Einzelclips"> Einzelclips</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="TXT/Markdown"> TXT/Markdown</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="SRT/VTT"> SRT/VTT</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="EDL"> EDL</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="ALE"> ALE</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="OTIO"> OTIO</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Formate sind erst für spätere Phasen relevant?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="exchange_formats_later" value="EDL"> EDL</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_later" value="ALE"> ALE</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_later" value="AAF"> AAF</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_later" value="OTIO"> OTIO</label>
+          <label class="option"><input type="checkbox" name="exchange_formats_later" value="Direkte Avid-Integration"> Direkte Avid-Integration</label>
+        </div>
+      </fieldset>
+
+      <label class="field-label" for="post_tools">Welche Tools werden für Motion Design, Ton, Lokalisierung, Finishing und Delivery genutzt?</label>
+      <textarea id="post_tools" name="post_tools"></textarea>
+
+      <label class="field-label" for="review_today">Wie läuft Review heute ab?</label>
+      <textarea id="review_today" name="review_today"></textarea>
+    </div>
+  </details>
+
+  <details>
+    <summary>Teil C – Daten / Sicherheit / Betrieb</summary>
+    <div class="details-body">
+      <p class="section-hint">Dieser Teil definiert den sicheren Betrieb: Daten rein, Ergebnisse raus, kein Internet bei Kundendaten, Rechte, Löschung, Updates.</p>
+
+      <fieldset>
+        <legend>Darf das System online sein, sobald Kundendaten auf dem Gerät liegen? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="online_with_customer_data" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="online_with_customer_data" value="Nur in Ausnahmefällen"> Nur in Ausnahmefällen</label>
+          <label class="option"><input type="radio" name="online_with_customer_data" value="Ja, aber kontrolliert"> Ja, aber kontrolliert</label>
+          <label class="option"><input type="radio" name="online_with_customer_data" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie kommen Daten auf das System? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="import_process" value="Verschlüsselte SSD"> Verschlüsselte SSD</label>
+          <label class="option"><input type="checkbox" name="import_process" value="USB-Stick"> USB-Stick</label>
+          <label class="option"><input type="checkbox" name="import_process" value="Interner Transfer"> Interner Transfer</label>
+          <label class="option"><input type="checkbox" name="import_process" value="Isoliertes Netzwerk"> Isoliertes Netzwerk</label>
+          <label class="option"><input type="checkbox" name="import_process" value="Nur Admin"> Nur Admin</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie verlassen Ergebnisse das System? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="export_process" value="Prüfung direkt am Gerät"> Prüfung direkt am Gerät</label>
+          <label class="option"><input type="checkbox" name="export_process" value="Verschlüsselte SSD"> Verschlüsselte SSD</label>
+          <label class="option"><input type="checkbox" name="export_process" value="USB-Stick"> USB-Stick</label>
+          <label class="option"><input type="checkbox" name="export_process" value="Kontrollierter Export"> Kontrollierter Export</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Soll FileVault verpflichtend aktiv sein? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="filevault" value="Ja, verpflichtend"> Ja, verpflichtend</label>
+          <label class="option"><input type="radio" name="filevault" value="Ja, wahrscheinlich"> Ja, wahrscheinlich</label>
+          <label class="option"><input type="radio" name="filevault" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="filevault" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Benutzerrollen sind geplant? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="user_roles" value="Admin"> Admin</label>
+          <label class="option"><input type="checkbox" name="user_roles" value="Operator"> Operator</label>
+          <label class="option"><input type="checkbox" name="user_roles" value="Reviewer"> Reviewer</label>
+          <label class="option"><input type="checkbox" name="user_roles" value="Gast/Kunde nicht erlaubt"> Gast/Kunde nicht erlaubt</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie lange dürfen Kundendaten auf dem System bleiben? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="deletion_policy" value="Nur während Test"> Nur während Test</label>
+          <label class="option"><input type="radio" name="deletion_policy" value="7 Tage"> 7 Tage</label>
+          <label class="option"><input type="radio" name="deletion_policy" value="14 Tage"> 14 Tage</label>
+          <label class="option"><input type="radio" name="deletion_policy" value="30 Tage"> 30 Tage</label>
+          <label class="option"><input type="radio" name="deletion_policy" value="Projektabhängig"> Projektabhängig</label>
+          <label class="option"><input type="radio" name="deletion_policy" value="Sofort löschen nach Abnahme"> Sofort löschen nach Abnahme</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Gibt es Backup – oder ist Backup bewusst verboten?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="backup_policy" value="Backup erlaubt"> Backup erlaubt</label>
+          <label class="option"><input type="radio" name="backup_policy" value="Kein Backup erlaubt"> Kein Backup erlaubt</label>
+          <label class="option"><input type="radio" name="backup_policy" value="Nur verschlüsseltes Backup"> Nur verschlüsseltes Backup</label>
+          <label class="option"><input type="radio" name="backup_policy" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie werden Modelle und Tools aktualisiert? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="update_staging" value="Nur nach vollständiger Löschung"> Nur nach vollständiger Löschung</label>
+          <label class="option"><input type="radio" name="update_staging" value="Über separates Staging"> Über separates Staging</label>
+          <label class="option"><input type="radio" name="update_staging" value="Nur durch Admin"> Nur durch Admin</label>
+          <label class="option"><input type="radio" name="update_staging" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche Daten dürfen niemals in den Pilot?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="forbidden_data" value="Unveröffentlichte Titel"> Unveröffentlichte Titel</label>
+          <label class="option"><input type="checkbox" name="forbidden_data" value="Drehbücher"> Drehbücher</label>
+          <label class="option"><input type="checkbox" name="forbidden_data" value="Personenbezogene Daten"> Personenbezogene Daten</label>
+          <label class="option"><input type="checkbox" name="forbidden_data" value="NDA-Material"> NDA-Material</label>
+          <label class="option"><input type="checkbox" name="forbidden_data" value="Stimmaufnahmen"> Stimmaufnahmen</label>
+          <label class="option"><input type="checkbox" name="forbidden_data" value="Daten bestimmter Kunden"> Daten bestimmter Kunden</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Sind Layout-Stimmen erlaubt? <span class="required-note">Pflicht</span></legend>
+        <div class="option-grid">
+          <label class="option"><input required type="radio" name="voice_policy" value="Intern erlaubt"> Intern erlaubt</label>
+          <label class="option"><input type="radio" name="voice_policy" value="Kundenfähig erlaubt"> Kundenfähig erlaubt</label>
+          <label class="option"><input type="radio" name="voice_policy" value="Nur mit Freigabe"> Nur mit Freigabe</label>
+          <label class="option"><input type="radio" name="voice_policy" value="Nicht erlaubt"> Nicht erlaubt</label>
+          <label class="option"><input type="radio" name="voice_policy" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+    </div>
+  </details>
+
+  <details>
+    <summary>Teil D – Referenzmaterial / Kalibrierung</summary>
+    <div class="details-body">
+      <p class="section-hint">Dieser Teil entscheidet, ob das System nicht nur technisch läuft, sondern kreativ kalibrierbar wird.</p>
+
+      <fieldset>
+        <legend>Gibt es fertige Trailer plus zugrunde liegendes Ausgangsmaterial?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="trailers_raw" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="trailers_raw" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="trailers_raw" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="trailers_raw" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Gibt es Skripte, Treatments oder Drehbücher?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="scripts_available" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="scripts_available" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="scripts_available" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="scripts_available" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Gibt es Transkripte oder Untertitel?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="transcripts_available" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="transcripts_available" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="transcripts_available" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="transcripts_available" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Gibt es Social-Versionen oder Cutdowns?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="social_versions" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="social_versions" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="social_versions" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="social_versions" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Gibt es Kundenfeedback oder Änderungsrunden?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="client_feedback" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="client_feedback" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="client_feedback" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="client_feedback" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+
+      <label class="field-label" for="good_selection">Was gilt bei euch als „gute Auswahl“?</label>
+      <textarea id="good_selection" name="good_selection" placeholder="3–5 Kriterien, keine Kundennamen."></textarea>
+
+      <label class="field-label" for="bad_selection">Was wäre eine klar schlechte Auswahl?</label>
+      <textarea id="bad_selection" name="bad_selection"></textarea>
+
+      <label class="field-label" for="special_rules">Welche Genres oder Kunden brauchen Sonderregeln?</label>
+      <textarea id="special_rules" name="special_rules" placeholder="Bitte anonymisiert beschreiben."></textarea>
+
+      <fieldset>
+        <legend>Liegt interne Freigabe für KI-Kalibrierung vor?</legend>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="calibration_approval" value="Ja"> Ja</label>
+          <label class="option"><input type="radio" name="calibration_approval" value="Teilweise"> Teilweise</label>
+          <label class="option"><input type="radio" name="calibration_approval" value="Nein"> Nein</label>
+          <label class="option"><input type="radio" name="calibration_approval" value="Unklar"> Unklar</label>
+        </div>
+      </fieldset>
+    </div>
+  </details>
+
+  <section class="card">
+    <h2>Zusammenfassung vor dem Absenden</h2>
+    <p class="section-hint">Diese ChatGPT-kompatible Zusammenfassung wird mit übermittelt. Bitte prüfen, dass keine vertraulichen Kundennamen oder Inhalte enthalten sind.</p>
+    <textarea class="summary-box" readonly></textarea>
+    <div class="actions">
+      <button type="button" class="secondary" data-copy-summary>Zusammenfassung kopieren</button>
+      <button type="submit">Fragebogen absenden</button>
+    </div>
+  </section>
+</form>
+</main>
+
+<footer>
+  <p>Mail-only UX: Die Ausfüllenden erhalten keinen Download-Workflow. Submissions werden über Netlify Forms verarbeitet.</p>
+</footer>
+<script src="/assets/questionnaire.js"></script>
+</body>
+</html>
