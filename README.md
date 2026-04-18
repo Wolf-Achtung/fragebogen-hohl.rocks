@@ -1,26 +1,18 @@
-# Fragebogen-MVP v4 – Auswahlseite + keine Rückfrage-E-Mail-Felder
+# Fragebogen-MVP v6 – Projektübersicht + zwei gleichberechtigte Teilprojekte
 
-Diese Fassung setzt die gewünschte Weiche vor die beiden Fragebögen und entfernt die Rückmeldemail-/Rückfragen-E-Mail-Felder aus beiden Formularen.
+Dieses Paket enthält eine freundliche Startseite und zwei gleichberechtigte Fragebögen:
 
-## Einstieg / Weiche
+- **Teilprojekt Office-KI mit Microsoft Copilot**  
+  Pfad: `/forms/copilot/`  
+  Formularname: `copilot-integration-v1`
 
-Die Ausfüllenden sollen zuerst diese Seite öffnen:
+- **Teilprojekt Lokale Postproduktions-KI im Büro**  
+  Pfad: `/forms/postproduktion/`  
+  Formularname: `postproduktion-ki-v1`
 
-```text
-https://fragebogen.hohl.rocks/
-```
+Die Startseite unter `/` ist keine Wahl im Sinne von Entweder-oder. Beide Teilprojekte sind vorgesehen. Die Seite dient nur als klare Orientierung und als Einstieg zu den beiden Fragebögen.
 
-Dort werden beide Wege klar getrennt erklärt:
-
-- **Weg A: Office-KI mit Microsoft Copilot**  
-  Ziel: Klären, ob und wie Copilot sinnvoll in Office, Outlook, Teams, Meetings, Textarbeit und Organisation starten kann.  
-  Direktlink: `https://fragebogen.hohl.rocks/forms/copilot/`
-
-- **Weg B: Lokale Postproduktions-KI im Büro**  
-  Ziel: Klären, welche lokalen KI-Hilfen für Videoanalyse, Timecode-Clips, Transkription, Selects und Social-Cutdowns im Pilot gebraucht werden.  
-  Direktlink: `https://fragebogen.hohl.rocks/forms/postproduktion/`
-
-## Enthaltene Struktur
+## Struktur
 
 ```text
 public/index.html
@@ -29,55 +21,47 @@ public/forms/postproduktion/index.html
 public/danke/index.html
 public/assets/forms.css
 public/assets/questionnaire.js
+README.md
+Muenchen-Remote-Runbook.md
 Berlin-Muenchen-Arbeitsweise.md
 Versandtext_freundlich.md
 ```
 
-## Formularnamen
+## Netlify Forms
 
-Copilot bleibt stabil:
+Die Formularnamen bleiben stabil:
 
 ```text
 copilot-integration-v1
-form_version = copilot-integration-v2-weiche
+postproduktion-ki-v1
 ```
 
-Postproduktion bleibt stabil:
+Beim Copilot-Fragebogen wird die inhaltliche Version über ein Hidden Field geführt:
 
 ```text
-postproduktion-ki-v1
-form_version = postproduktion-ki-v1-weiche
+form_version = copilot-integration-v2-lokalabgrenzung
 ```
 
-## Wichtig
-
-- Keine E-Mail-Felder für Rückfragen mehr in den Formularen.
-- Keine Uploadfelder.
-- Keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohmaterialdaten oder personenbezogenen Details eintragen lassen.
-- Benachrichtigung weiterhin direkt an `wolf@hohl.rocks`, nicht über Weiterleitung.
-
-## Netlify-Check nach Deploy
+## Nach dem Deploy prüfen
 
 1. Netlify → Forms → prüfen, ob beide Formulare erkannt wurden.
-2. Falls nicht: Forms → Enable form detection.
+2. Falls nötig: Forms → Enable form detection.
 3. Deploys → Trigger deploy → Clear cache and deploy site.
 4. Project configuration → Notifications → Form submission notifications.
 5. Empfänger direkt: `wolf@hohl.rocks`.
 
 ## Test
 
-Je einmal Testsubmission für:
+1. Startseite öffnen: `/`
+2. Office-Fragebogen testweise absenden.
+3. Postproduktions-Fragebogen testweise absenden.
+4. Prüfen:
+   - Submission im Netlify Forms Dashboard vorhanden
+   - Mail kommt bei `wolf@hohl.rocks` an
+   - `chatgpt_summary` ist enthalten
+   - `auto_route` und Ampeln sind enthalten
+   - offene Punkte und nächste Schritte sind enthalten
 
-```text
-/forms/copilot/
-/forms/postproduktion/
-```
+## Inhaltliche Ergänzung
 
-Prüfen:
-
-- Submission im Netlify Dashboard vorhanden
-- Mail kommt bei `wolf@hohl.rocks` an
-- `chatgpt_summary` ist enthalten
-- `auto_route` ist enthalten
-- jeweilige Ampeln sind enthalten
-- kein `email`-Feld wird im Formular angezeigt oder übermittelt
+Der Postproduktions-Fragebogen berücksichtigt zusätzlich die mögliche Nutzung als lokaler KI-Server im internen Büro-Netz, zum Beispiel mit lokaler Oberfläche, LM-Studio-/Server-Idee, Open-WebUI-/AnythingLLM-ähnlichen Oberflächen oder lokaler Wissensdatenbank. Die konkrete Tool- und Modellwahl soll später aus den Antworten abgeleitet werden.

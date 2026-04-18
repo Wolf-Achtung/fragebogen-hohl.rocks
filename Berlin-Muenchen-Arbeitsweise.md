@@ -70,3 +70,16 @@ Wolf braucht nicht zwingend Rohmaterial, sondern entscheidbare Informationen:
 
 Remote ist gut für Planung, Setup und Dummy-Tests.  
 Echtes Projektmaterial bleibt lokal in München und wird dort geprüft.
+
+
+## Ergänzung: lokaler KI-Server im Büro
+
+Falls der Mac mini nicht nur als Einzelplatz, sondern als lokaler KI-Server im Büro genutzt werden soll, gilt:
+
+- Server-/LAN-Zugriff zuerst nur mit Dummy-Material testen.
+- Keine iCloud-/Cloud-Synchronisierung für Kundendaten einrichten.
+- Modelle und Tools möglichst in einer Setup-/Staging-Phase laden.
+- Danach Kundendatenphase getrennt halten: offline oder klar begrenztes internes Netz ohne externe Erreichbarkeit.
+- Vor Kundendatenphase dokumentieren: IP/Port, zugelassene Geräte, Bedienoberfläche, Import/Export, Löschung.
+
+Die lokale Serveridee ist interessant, darf aber nicht dazu führen, dass der Offline-Vorteil durch eine falsche Netzwerkeinstellung verloren geht.
