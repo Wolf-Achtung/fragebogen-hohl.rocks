@@ -1,31 +1,41 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fragebögen</title>
-<style>
-body{font:18px/1.5 system-ui,sans-serif;background:#f6f7fb;color:#202636;margin:0;padding:40px}.box{max-width:780px;margin:auto;background:white;border:1px solid #d9dfeb;border-radius:18px;padding:30px;box-shadow:0 10px 30px rgba(16,24,40,.08)}a{color:#2557d6;font-weight:700}
-.hidden{display:none}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KI-Fragebögen – Übersicht</title>
+  <link rel="stylesheet" href="/assets/forms.css">
 </head>
 <body>
-<div class="box">
-<h1>Fragebögen</h1>
-<p><a href="/forms/copilot/">Copilot-Integrationsfragebogen öffnen</a></p>
-</div>
-
-<!-- Statisches Netlify-Forms-Erkennungsformular. Nicht entfernen. -->
-<form name="copilot-integration-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" class="hidden">
-  <input type="hidden" name="form-name" value="copilot-integration-v1">
-  <input name="bot-field">
-  <input name="form_id">
-  <input name="submitted_at">
-  <input name="assessment_status">
-  <input name="assessment_path">
-  <input name="email">
-  <textarea name="chatgpt_zusammenfassung"></textarea>
-  <textarea name="json_export"></textarea>
-</form>
+<header>
+  <div class="hero">
+    <div class="eyebrow">KI-Orientierung · zwei klare Wege</div>
+    <h1>Zwei kurze Fragebögen für zwei unterschiedliche KI-Wege</h1>
+    <p class="lead">Es geht nicht um perfekte Antworten. Es geht um eine schnelle, faire Einschätzung: Was kann sofort starten, was muss vorher kurz geklärt werden, und wie wird daraus ein praktikabler Pilot?</p>
+    <div class="notice"><strong>Vertraulich und pragmatisch:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Rohmaterial, Drehbuchinhalte oder personenbezogenen Details eintragen. Aliase und grobe Beschreibungen reichen völlig.</div>
+  </div>
+</header>
+<main>
+  <div class="path-grid">
+    <a class="path-card" href="/forms/copilot/">
+      <div class="path-kicker">Weg A</div>
+      <h2>Office-KI mit Microsoft Copilot</h2>
+      <p>Für E-Mail, Teams, Meetings, Texte, Präsentationen, Briefings, Suche und Organisation.</p>
+      <p class="small">Ergebnis: passende Startvariante, Pilotgruppe, offene IT-/Datenfragen und nächste Schritte.</p>
+      <span class="button">Weg A öffnen</span>
+    </a>
+    <a class="path-card" href="/forms/postproduktion/">
+      <div class="path-kicker">Weg B</div>
+      <h2>Lokale Postproduktions-KI im Büro</h2>
+      <p>Für Videoanalyse, Timecode-Clips, Transkription, Selects, Quote-Findung, Social-Cutdowns und lokale Tests.</p>
+      <p class="small">Ergebnis: Pilot-Output, Offline-Arbeitsweise, Workflow-Anschluss und Referenzbedarf.</p>
+      <span class="button">Weg B öffnen</span>
+    </a>
+  </div>
+  <p class="friendly-note">Teil A reicht jeweils für eine erste Empfehlung. Die weiteren Teile sind hilfreich, aber nicht als Hürde gedacht.</p>
+</main>
+<footer>
+  <p>Nach dem Absenden geht eine strukturierte Zusammenfassung an Wolf. Keine Uploads, keine Downloads, kein zusätzlicher Exportaufwand.</p>
+</footer>
 </body>
 </html>

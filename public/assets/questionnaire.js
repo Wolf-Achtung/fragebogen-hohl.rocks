@@ -24,9 +24,9 @@
     if (el) el.value = value || "";
   }
   function colorLabel(color) {
-    if (color === "green") return "Grün – startklar";
-    if (color === "yellow") return "Gelb – prüfen";
-    if (color === "red") return "Rot – blockiert";
+    if (color === "green") return "Passt gut";
+    if (color === "yellow") return "Kurz klären";
+    if (color === "red") return "Vor Start klären";
     return "Noch offen";
   }
   function colorClass(color) {
@@ -97,9 +97,9 @@
     if (unknown(mode)) unknowns.push("Zielbild noch offen.");
     if (!groups.length) unknowns.push("Pilotgruppen fehlen.");
     if (unknown(license)) unknowns.push("Microsoft-365-Lizenzbasis unklar.");
-    if (!yes(entra)) blockers.push("Zentrale Microsoft-Anmeldung / Entra ID ist nicht bestätigt.");
-    if (integrated && !yes(exchange)) blockers.push("Exchange Online für primäre Postfächer ist für integrierten Copilot nicht bestätigt.");
-    if (integrated && !yes(apps)) blockers.push("Aktuelle Microsoft-365-Apps der Pilotgruppe sind nicht bestätigt.");
+    if (!yes(entra)) blockers.push("Zentrale Microsoft-Anmeldung sollte kurz bestätigt werden.");
+    if (integrated && !yes(exchange)) blockers.push("Exchange Online für die primären Postfächer sollte kurz bestätigt werden.");
+    if (integrated && !yes(apps)) blockers.push("Aktuelle Microsoft-365-Apps der Pilotgruppe sollten kurz bestätigt werden.");
     if (/regelmäßig/i.test(teams) && !yes(transcript)) unknowns.push("Teams-Transkription/Aufzeichnung für Meeting-Use-Cases klären.");
 
     let readiness = "green";
@@ -122,23 +122,23 @@
     if (missingAdoption >= 4) adoption = "red";
     else if (missingAdoption >= 1) adoption = "yellow";
 
-    let route = "Gestuft starten: Chat zuerst, Integration nach Daten-/IT-Klärung";
-    if (readiness === "green" && governance !== "red" && dataFoundation !== "red" && /integriert/i.test(mode)) route = "Jetzt mit Microsoft 365 Copilot als Pilot starten";
-    else if (readiness !== "red" && /chat/i.test(mode)) route = "Jetzt mit Copilot Chat starten";
-    else if (readiness === "red" || governance === "red") route = "Foundation zuerst: technische / Governance-Grundlagen klären";
-    else if (/gestuft/i.test(mode)) route = "Gestuft starten: Chat zuerst, Integration nach Foundations";
+    let route = "Weg A: Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
+    if (readiness === "green" && governance !== "red" && dataFoundation !== "red" && /integriert/i.test(mode)) route = "Weg A: Office-KI mit Microsoft 365 Copilot als kleine Pilotgruppe starten";
+    else if (readiness !== "red" && /chat/i.test(mode)) route = "Weg A: Office-KI zuerst mit Copilot Chat starten";
+    else if (readiness === "red" || governance === "red") route = "Weg A: Erst die wichtigsten Office-KI-Grundlagen klären";
+    else if (/gestuft/i.test(mode)) route = "Weg A: Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
 
-    if (!blockers.length) blockers.push("Keine harten Blocker aus den Pflichtangaben erkennbar.");
-    if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Pflichtangaben erkennbar.");
-    if (readiness !== "green") next.push("Technische Mindestvoraussetzungen der Pilotgruppe verifizieren.");
-    if (governance !== "green") next.push("Sensible Inhalte, externe Freigaben und Schutzmechanismen klären.");
-    if (dataFoundation !== "green") next.push("Relevante Datenorte priorisieren und Microsoft-365-Datenbasis prüfen.");
-    if (adoption !== "green") next.push("Sponsor, Champions, Support und Erfolgsmessung festlegen.");
-    if (!next.length) next.push("Pilotgruppe festlegen, Lizenzen prüfen und 30/60/90-Tage-Pilotplan erstellen.");
+    if (!blockers.length) blockers.push("Aus den bisherigen Angaben ergibt sich kein Punkt, der den Start grundsätzlich aufhält.");
+    if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Basisangaben erkennbar.");
+    if (readiness !== "green") next.push("Technische Basis der Pilotgruppe kurz prüfen.");
+    if (governance !== "green") next.push("Gemeinsame Spielregeln für sensible Inhalte und Freigaben klären.");
+    if (dataFoundation !== "green") next.push("Wichtigste Datenorte priorisieren und Microsoft-365-Ablage prüfen.");
+    if (adoption !== "green") next.push("Entscheider, Testpersonen, Support und Erfolgskriterien festlegen.");
+    if (!next.length) next.push("Pilotgruppe festlegen und daraus einen einfachen 30/60/90-Tage-Plan erstellen.");
 
     const summary = cleanLines([
       "PROJEKT",
-      "Copilot-Integration",
+      "Weg A – Office-KI mit Microsoft Copilot",
       `Kontakt: ${contactEmail || "—"}`,
       "Formular: copilot-integration-v1",
       "Version: copilot-integration-v2",
@@ -150,7 +150,7 @@
       `Datenbasis: ${colorLabel(dataFoundation)}`,
       `Adoption: ${colorLabel(adoption)}`,
       "",
-      "WICHTIGSTE BLOCKER",
+      "KURZ ZU KLÄREN",
       blockers.map(x => `- ${x}`).join("\n"),
       "",
       "OFFENE PUNKTE",
@@ -166,7 +166,7 @@
       `Vollausbau: ${fullSize || "—"}`,
       `90-Tage-Ziele: ${goals || "—"}`,
       "",
-      "TECHNISCHE BASIS",
+      "MICROSOFT-365-BASIS",
       `Lizenz: ${license || "—"}`,
       `Zentrale Anmeldung / Entra ID: ${entra || "—"}`,
       `Exchange Online: ${exchange || "—"}`,
@@ -174,7 +174,7 @@
       `Teams: ${teams || "—"}`,
       `Meeting-Transkription: ${transcript || "—"}`,
       "",
-      "DATEN & GOVERNANCE",
+      "DATEN & SPIELREGELN",
       `Datenorte: ${listOrDash(dataLocations)}`,
       `Nutzbare Daten: ${listOrDash(allowedData)}`,
       `Sensible / ausgeschlossene Inhalte: ${listOrDash(sensitive)}`,
@@ -184,7 +184,7 @@
       `MFA / Conditional Access: ${mfa || "—"}`,
       `Compliance: ${compliance || "—"}`,
       "",
-      "ROLLOUT",
+      "PILOT & ALLTAG",
       `Sponsor: ${sponsor || "—"}`,
       `IT-Owner: ${itOwner || "—"}`,
       `Champions: ${champions || "—"}`,
@@ -252,8 +252,8 @@
     let unknowns = [];
     let next = [];
 
-    if (useCases.length < 1) blockers.push("Keine Top-Use-Cases gewählt.");
-    if (unknown(mainOutput)) blockers.push("Hauptoutput ist nicht geklärt.");
+    if (useCases.length < 1) blockers.push("Bitte noch die wichtigsten Aufgaben auswählen.");
+    if (unknown(mainOutput)) blockers.push("Bitte noch das wichtigste Ergebnis auswählen.");
     if (!refProjects) unknowns.push("Referenzprojekte fehlen oder sind nicht beschrieben.");
     if (!successCriteria) unknowns.push("Erfolgskriterien fehlen.");
     if (unknown(offlineModel)) unknowns.push("Offline-Modell ist unklar.");
@@ -269,7 +269,7 @@
     else if (missingWorkflow >= 1) workflowFit = "yellow";
 
     let operations = "green";
-    if (/ja/i.test(onlineWithData)) blockers.push("System wäre mit Kundendaten online – das widerspricht dem geplanten Offline-Pilot.");
+    if (/ja/i.test(onlineWithData)) blockers.push("Bitte klären, ob echtes Projektmaterial wirklich offline bleiben soll.");
     const missingOps = (unknown(onlineWithData) ? 1 : 0) + (!importProcess.length ? 1 : 0) + (!exportProcess.length ? 1 : 0) + (unknown(filevault) ? 1 : 0) + (!userRoles.length ? 1 : 0) + (unknown(deletionPolicy) ? 1 : 0) + (unknown(updateStaging) ? 1 : 0);
     if (/ja/i.test(onlineWithData) || missingOps >= 4) operations = "red";
     else if (missingOps >= 1) operations = "yellow";
@@ -279,24 +279,24 @@
     if (missingCalibration >= 5 || /nein/i.test(calibrationApproval)) calibration = "red";
     else if (missingCalibration >= 2) calibration = "yellow";
 
-    let route = "Output-first Pilot mit Review-Reel/Listen starten";
-    if (operations === "red") route = "Betriebskonzept zuerst: Offline, Import/Export, Rechte und Löschung klären";
-    else if (pilotClarity === "red") route = "Pilotziel zuerst schärfen: Use Cases, Hauptoutput, Referenzprojekte";
-    else if (workflowFit === "red") route = "Workflow-Grundlagen zuerst klären: Timecode, Proxy, Austauschformate";
-    else if (calibration === "red") route = "Kalibrierungspaket zuerst vorbereiten";
-    else if (pilotClarity === "green" && workflowFit !== "red" && operations !== "red") route = "Pilot starten: lokales Offline-System mit klaren Outputs vorbereiten";
+    let route = "Weg B: Lokale Postproduktions-KI als Output-Pilot starten";
+    if (operations === "red") route = "Weg B: Erst die praktische Arbeitsweise im Büro klären";
+    else if (pilotClarity === "red") route = "Weg B: Erst Ziel und wichtigste Ergebnisse des Pilots schärfen";
+    else if (workflowFit === "red") route = "Weg B: Erst Anschluss an Schnitt, Timecode und Übergabe klären";
+    else if (calibration === "red") route = "Weg B: Erst Referenzen und Kriterien für gute Auswahl vorbereiten";
+    else if (pilotClarity === "green" && workflowFit !== "red" && operations !== "red") route = "Weg B: Lokale Postproduktions-KI als klaren Output-Pilot starten";
 
-    if (!blockers.length) blockers.push("Keine harten Blocker aus den Pflichtangaben erkennbar.");
-    if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Pflichtangaben erkennbar.");
-    if (pilotClarity !== "green") next.push("Top-Use-Cases, Hauptoutput, Referenzprojekte und Erfolgskriterien finalisieren.");
-    if (workflowFit !== "green") next.push("Avid-/Proxy-/Timecode-/Austauschformat-Details mit Postproduktion klären.");
-    if (operations !== "green") next.push("Offline-, Import-/Export-, FileVault-, Rechte- und Löschprozess verbindlich festlegen.");
-    if (calibration !== "green") next.push("Referenzmaterial und Kriterien für gute/schlechte Auswahl vorbereiten.");
-    if (!next.length) next.push("Mac-mini-Pilot vorbereiten: Hardware, Staging, Dummy-Test, danach Kundendaten nur offline.");
+    if (!blockers.length) blockers.push("Aus den bisherigen Angaben ergibt sich kein Punkt, der den Start grundsätzlich aufhält.");
+    if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Basisangaben erkennbar.");
+    if (pilotClarity !== "green") next.push("Top-Aufgaben, wichtigstes Ergebnis, Referenzen und Erfolgskriterien finalisieren.");
+    if (workflowFit !== "green") next.push("Schnitt-, Proxy-, Timecode- und Übergabefragen mit der Postproduktion klären.");
+    if (operations !== "green") next.push("Offline-, Import-/Export-, FileVault-, Rechte- und Löschprozess einfach festlegen.");
+    if (calibration !== "green") next.push("Referenzmaterial und Kriterien für gute Auswahl vorbereiten.");
+    if (!next.length) next.push("Lokalen Pilot vorbereiten: Hardware, Staging, Dummy-Test; echte Projektmaterialien danach nur offline.");
 
     const summary = cleanLines([
       "PROJEKT",
-      "Lokales Postproduktions-KI-System",
+      "Weg B – Lokale Postproduktions-KI im Büro",
       `Kontakt: ${contactEmail || "—"}`,
       "Formular: postproduktion-ki-v1",
       "Version: postproduktion-ki-v1",
@@ -308,7 +308,7 @@
       `Betriebsreife: ${colorLabel(operations)}`,
       `Kalibrierbarkeit: ${colorLabel(calibration)}`,
       "",
-      "WICHTIGSTE BLOCKER",
+      "KURZ ZU KLÄREN",
       blockers.map(x => `- ${x}`).join("\n"),
       "",
       "OFFENE PUNKTE",
@@ -339,7 +339,7 @@
       `Weitere Post-Tools: ${postTools || "—"}`,
       `Review heute: ${reviewToday || "—"}`,
       "",
-      "BETRIEB & SICHERHEIT",
+      "BETRIEB & UMGANG MIT MATERIAL",
       `Offlinegrad: ${offlineModel || "—"}`,
       `Online mit Kundendaten: ${onlineWithData || "—"}`,
       `Import: ${listOrDash(importProcess)}`,
@@ -349,10 +349,10 @@
       `Löschfrist: ${deletionPolicy || "—"}`,
       `Backup: ${backupPolicy || "—"}`,
       `Update-Staging: ${updateStaging || "—"}`,
-      `Verbotene Daten: ${listOrDash(forbiddenData)}`,
+      `Nicht vorgesehene Daten: ${listOrDash(forbiddenData)}`,
       `Layout-VO-Regel: ${voicePolicy || "—"}`,
       "",
-      "KALIBRIERUNG",
+      "REFERENZEN & AUSWAHLGEFÜHL",
       `Trailer + Rohmaterial: ${trailersRaw || "—"}`,
       `Skripte: ${scripts || "—"}`,
       `Transkripte / Untertitel: ${transcripts || "—"}`,
@@ -410,17 +410,17 @@
       setHidden(form, "auto_operations", colorLabel(result.operations));
       setHidden(form, "auto_calibration", colorLabel(result.calibration));
     }
-    setHidden(form, "auto_blockers", result.blockers.join("\n"));
+    setHidden(form, "auto_to_clarify", result.blockers.join("\n"));
     setHidden(form, "auto_unknowns", result.unknowns.join("\n"));
     setHidden(form, "auto_next_steps", result.next.join("\n"));
     setHidden(form, "chatgpt_summary", result.summary);
     if (summaryField) summaryField.value = result.summary;
 
     box.innerHTML = `
-      <h2>Vorläufige Einschätzung</h2>
-      <p><strong>Empfohlener Startpfad:</strong> ${result.route}</p>
+      <h2>Kurzer Zwischenstand</h2>
+      <p><strong>Empfohlener Weg:</strong> ${result.route}</p>
       <div class="badges">${badges}</div>
-      <p><strong>Wichtigster nächster Schritt:</strong> ${result.next[0] || "—"}</p>
+      <p><strong>Nächster sinnvoller Schritt:</strong> ${result.next[0] || "—"}</p>
     `;
   }
 

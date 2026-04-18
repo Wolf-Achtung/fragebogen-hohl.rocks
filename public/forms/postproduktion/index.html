@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Lokale Postproduktions-KI – Fragebogen</title>
+  <title>Weg B – Lokale Postproduktions-KI</title>
   <link rel="stylesheet" href="/assets/forms.css">
 </head>
 <body>
 <header>
   <div class="hero">
-    <div class="eyebrow">KI-Fragebogen · Postproduktion · Offline-Pilot</div>
-    <h1>Lokales Postproduktions-KI-System</h1>
-    <p class="lead">Geführter Fragebogen für einen lokalen Mac-mini-Pilot: Videoanalyse, Timecode-Clips, Transkription, Quote-Findung, Social-Cutdowns, Layout-VO und spätere Avid-Brücken.</p>
-    <div class="notice"><strong>Wichtig:</strong> Bitte keine vertraulichen Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen. Verwenden Sie Projekt-Aliase.</div>
+    <div class="eyebrow">Weg B · Postproduktion · lokaler Pilot</div>
+    <h1>Lokale Postproduktions-KI im Büro</h1>
+    <p class="lead">Ein kurzer Orientierungsfragebogen für Videoanalyse, Timecode-Clips, Transkription, Selects, Social-Cutdowns und einen lokalen Mac-mini-Pilot im Büro.</p>
+    <div class="notice"><strong>Damit es leicht und vertraulich bleibt:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen. Projekt-Aliase reichen völlig.</div>
     <nav class="nav" aria-label="Formularnavigation">
-      <a href="/forms/copilot/">Copilot</a>
-      <a href="/forms/postproduktion/">Postproduktion-KI</a>
+      <a href="/forms/copilot/">Weg A: Office-KI</a>
+      <a href="/forms/postproduktion/">Weg B: Postproduktions-KI</a>
     </nav>
   </div>
 </header>
@@ -25,13 +25,13 @@
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="postproduktion-ki-v1">
   <input type="hidden" name="form_version" value="postproduktion-ki-v1">
-  <input type="hidden" name="subject" data-remove-prefix value="Postproduktions-KI-Fragebogen %{submissionId}">
+  <input type="hidden" name="subject" data-remove-prefix value="Weg B Postproduktions-KI %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_pilot_clarity">
   <input type="hidden" name="auto_workflow_fit">
   <input type="hidden" name="auto_operations">
   <input type="hidden" name="auto_calibration">
-  <textarea name="auto_blockers" hidden></textarea>
+  <textarea name="auto_to_clarify" hidden></textarea>
   <textarea name="auto_unknowns" hidden></textarea>
   <textarea name="auto_next_steps" hidden></textarea>
   <textarea name="chatgpt_summary" hidden></textarea>
@@ -39,16 +39,16 @@
   <div class="assessment" aria-live="polite"></div>
 
   <details open>
-    <summary>Teil A – Sofortstart / Pilotfähigkeit</summary>
+    <summary>Teil A – Was soll der lokale Pilot zuerst leisten?</summary>
     <div class="details-body">
-      <p class="section-hint">Dieser Teil reicht für eine erste Pilot-Roadmap: Hardwarebild, Offline-Modell, Toolstack-Reihenfolge, Output-Definition und Erfolgskriterien.</p>
+      <p class="section-hint">Dieser Teil reicht für eine erste praktische Empfehlung: wichtigste Aufgaben, gewünschte Ergebnisse, Materialarten, Offline-Umgang und Erfolgskriterien.</p>
 
       <label class="field-label" for="email">E-Mail für Rückfragen</label>
       <input id="email" name="email" type="email" placeholder="optional, z. B. name@firma.de">
-      <p class="help">Optional. Hilft, falls eine Rückfrage zur Submission nötig ist.</p>
+      <p class="help">Optional. Hilft nur, falls eine kurze Rückfrage nötig ist.</p>
 
       <fieldset>
-        <legend>Welche 2–3 Use Cases sollen im Pilot zwingend funktionieren? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche 2–3 Aufgaben sollen im Pilot zuerst spürbar helfen? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="top_use_cases" value="Szenen-/Shot-Erkennung"> Szenen-/Shot-Erkennung</label>
           <label class="option"><input type="checkbox" name="top_use_cases" value="Bild-/Ton-basierte Selektion"> Bild-/Ton-basierte Selektion</label>
@@ -65,7 +65,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welcher Output ist im Pilot am wichtigsten? <span class="required-note">Pflicht</span></legend>
+        <legend>Welches Ergebnis wäre im Pilot am wichtigsten? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="main_output" value="Review-Reel"> Review-Reel</label>
           <label class="option"><input type="radio" name="main_output" value="Select-Clips"> Select-Clips</label>
@@ -79,7 +79,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welche Materialarten sollen verarbeitet werden? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche Materialarten sollen verarbeitet werden? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="material_types" value="ProRes"> ProRes</label>
           <label class="option"><input type="checkbox" name="material_types" value="H.264/H.265"> H.264/H.265</label>
@@ -93,12 +93,12 @@
         </div>
       </fieldset>
 
-      <label class="field-label" for="project_size">Wie groß ist ein typisches Testprojekt? <span class="required-note">Pflicht</span></label>
+      <label class="field-label" for="project_size">Wie groß ist ein typisches Testprojekt? <span class="required-note">für Roadmap</span></label>
       <p class="help">Bitte grob: Materiallaufzeit, Anzahl Dateien, typische Dateigröße, Sprachen, Versionen.</p>
       <textarea id="project_size" name="project_size" required></textarea>
 
       <fieldset>
-        <legend>Wie offline muss das System nach Einrichtung sein? <span class="required-note">Pflicht</span></legend>
+        <legend>Wie soll nach der Einrichtung mit Internet und Projektmaterial umgegangen werden? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="offline_model" value="Vollständig offline"> Vollständig offline</label>
           <label class="option"><input type="radio" name="offline_model" value="Offline bei Kundendaten, online nur nach Löschung für Updates"> Offline bei Kundendaten, online nur nach Löschung für Updates</label>
@@ -119,25 +119,25 @@
         </div>
       </fieldset>
 
-      <label class="field-label" for="success_owner">Wer bewertet den Erfolg? <span class="required-note">Pflicht</span></label>
+      <label class="field-label" for="success_owner">Wer schaut sich die Ergebnisse an und bewertet, ob sie helfen? <span class="required-note">für Roadmap</span></label>
       <input id="success_owner" name="success_owner" type="text" required placeholder="Name oder Rolle">
 
-      <label class="field-label" for="reference_projects">Welche 2–3 Referenzprojekte stehen bereit? <span class="required-note">Pflicht</span></label>
+      <label class="field-label" for="reference_projects">Welche 2–3 Referenzprojekte stehen bereit? <span class="required-note">für Roadmap</span></label>
       <p class="help">Bitte nur Alias/Projekttyp, keine Kundennamen oder unveröffentlichten Titel.</p>
       <textarea id="reference_projects" name="reference_projects" required></textarea>
 
-      <label class="field-label" for="success_criteria">Was wäre nach 4–6 Wochen ein Erfolg? <span class="required-note">Pflicht</span></label>
+      <label class="field-label" for="success_criteria">Was wäre nach 4–6 Wochen ein gutes Zeichen? <span class="required-note">für Roadmap</span></label>
       <textarea id="success_criteria" name="success_criteria" required></textarea>
     </div>
   </details>
 
   <details>
-    <summary>Teil B – Workflow / Postproduktion</summary>
+    <summary>Teil B – Anschluss an Schnitt & Postproduktion</summary>
     <div class="details-body">
-      <p class="section-hint">Dieser Teil klärt den Anschluss an den echten Postproduktionsalltag: Avid, Proxies, Timecode, Austauschformate, Review und Übergabe.</p>
+      <p class="section-hint">Dieser Teil klärt, wie die Ergebnisse in den bestehenden Alltag passen: Schnittsystem, Proxies, Timecode, Übergabe, Review und Freigabe.</p>
 
       <fieldset>
-        <legend>Welche Schnittsysteme sind im Einsatz? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche Schnittsysteme sind im Einsatz? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="nle_tools" value="Avid Media Composer"> Avid Media Composer</label>
           <label class="option"><input type="checkbox" name="nle_tools" value="DaVinci Resolve"> DaVinci Resolve</label>
@@ -151,7 +151,7 @@
       <input id="avid_versions" name="avid_versions" type="text">
 
       <fieldset>
-        <legend>Gibt es einen Proxy-Workflow? <span class="required-note">Pflicht</span></legend>
+        <legend>Gibt es einen Proxy-Workflow? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="proxy_workflow" value="Ja, standardisiert"> Ja, standardisiert</label>
           <label class="option"><input type="radio" name="proxy_workflow" value="Ja, projektabhängig"> Ja, projektabhängig</label>
@@ -161,7 +161,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welche Timecode-Basis ist relevant? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche Timecode-Basis ist relevant? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="timecode_basis" value="Source-TC"> Source-TC</label>
           <label class="option"><input type="radio" name="timecode_basis" value="Timeline-TC"> Timeline-TC</label>
@@ -182,7 +182,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welche Austauschformate sind in Phase 1 realistisch? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche Austauschformate sind in Phase 1 realistisch? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="CSV/Excel"> CSV/Excel</label>
           <label class="option"><input type="checkbox" name="exchange_formats_phase1" value="Review-Reel"> Review-Reel</label>
@@ -215,12 +215,12 @@
   </details>
 
   <details>
-    <summary>Teil C – Daten / Sicherheit / Betrieb</summary>
+    <summary>Teil C – Praktischer Betrieb im Büro</summary>
     <div class="details-body">
-      <p class="section-hint">Dieser Teil definiert den sicheren Betrieb: Daten rein, Ergebnisse raus, kein Internet bei Kundendaten, Rechte, Löschung, Updates.</p>
+      <p class="section-hint">Dieser Teil beschreibt die praktische Arbeitsweise im Büro: Wie kommt Material hinein, wie kommen Ergebnisse heraus, wer darf was, und wann wird gelöscht?</p>
 
       <fieldset>
-        <legend>Darf das System online sein, sobald Kundendaten auf dem Gerät liegen? <span class="required-note">Pflicht</span></legend>
+        <legend>Soll das System online bleiben, sobald echtes Projektmaterial auf dem Gerät liegt? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="online_with_customer_data" value="Nein"> Nein</label>
           <label class="option"><input type="radio" name="online_with_customer_data" value="Nur in Ausnahmefällen"> Nur in Ausnahmefällen</label>
@@ -230,7 +230,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Wie kommen Daten auf das System? <span class="required-note">Pflicht</span></legend>
+        <legend>Wie kommen Daten auf das System? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="import_process" value="Verschlüsselte SSD"> Verschlüsselte SSD</label>
           <label class="option"><input type="checkbox" name="import_process" value="USB-Stick"> USB-Stick</label>
@@ -241,7 +241,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Wie verlassen Ergebnisse das System? <span class="required-note">Pflicht</span></legend>
+        <legend>Wie verlassen Ergebnisse das System? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="export_process" value="Prüfung direkt am Gerät"> Prüfung direkt am Gerät</label>
           <label class="option"><input type="checkbox" name="export_process" value="Verschlüsselte SSD"> Verschlüsselte SSD</label>
@@ -251,9 +251,9 @@
       </fieldset>
 
       <fieldset>
-        <legend>Soll FileVault verpflichtend aktiv sein? <span class="required-note">Pflicht</span></legend>
+        <legend>Soll FileVault standardmäßig aktiv sein? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
-          <label class="option"><input required type="radio" name="filevault" value="Ja, verpflichtend"> Ja, verpflichtend</label>
+          <label class="option"><input required type="radio" name="filevault" value="Ja, als Standard"> Ja, als Standard</label>
           <label class="option"><input type="radio" name="filevault" value="Ja, wahrscheinlich"> Ja, wahrscheinlich</label>
           <label class="option"><input type="radio" name="filevault" value="Nein"> Nein</label>
           <label class="option"><input type="radio" name="filevault" value="Unklar"> Unklar</label>
@@ -261,7 +261,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welche Benutzerrollen sind geplant? <span class="required-note">Pflicht</span></legend>
+        <legend>Welche Benutzerrollen sind geplant? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="user_roles" value="Admin"> Admin</label>
           <label class="option"><input type="checkbox" name="user_roles" value="Operator"> Operator</label>
@@ -271,7 +271,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Wie lange dürfen Kundendaten auf dem System bleiben? <span class="required-note">Pflicht</span></legend>
+        <legend>Wie lange dürfen Kundendaten auf dem System bleiben? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="deletion_policy" value="Nur während Test"> Nur während Test</label>
           <label class="option"><input type="radio" name="deletion_policy" value="7 Tage"> 7 Tage</label>
@@ -283,7 +283,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Gibt es Backup – oder ist Backup bewusst verboten?</legend>
+        <legend>Ist ein Backup vorgesehen – oder soll bewusst ohne Backup gearbeitet werden?</legend>
         <div class="option-grid">
           <label class="option"><input type="radio" name="backup_policy" value="Backup erlaubt"> Backup erlaubt</label>
           <label class="option"><input type="radio" name="backup_policy" value="Kein Backup erlaubt"> Kein Backup erlaubt</label>
@@ -293,7 +293,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Wie werden Modelle und Tools aktualisiert? <span class="required-note">Pflicht</span></legend>
+        <legend>Wie werden Modelle und Tools aktualisiert? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="update_staging" value="Nur nach vollständiger Löschung"> Nur nach vollständiger Löschung</label>
           <label class="option"><input type="radio" name="update_staging" value="Über separates Staging"> Über separates Staging</label>
@@ -303,7 +303,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Welche Daten dürfen niemals in den Pilot?</legend>
+        <legend>Welche Daten sollen im Pilot nicht verwendet werden?</legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="forbidden_data" value="Unveröffentlichte Titel"> Unveröffentlichte Titel</label>
           <label class="option"><input type="checkbox" name="forbidden_data" value="Drehbücher"> Drehbücher</label>
@@ -315,7 +315,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Sind Layout-Stimmen erlaubt? <span class="required-note">Pflicht</span></legend>
+        <legend>Sind Layout-Stimmen erlaubt? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="voice_policy" value="Intern erlaubt"> Intern erlaubt</label>
           <label class="option"><input type="radio" name="voice_policy" value="Kundenfähig erlaubt"> Kundenfähig erlaubt</label>
@@ -328,9 +328,9 @@
   </details>
 
   <details>
-    <summary>Teil D – Referenzmaterial / Kalibrierung</summary>
+    <summary>Teil D – Referenzen & Gefühl für gute Auswahl</summary>
     <div class="details-body">
-      <p class="section-hint">Dieser Teil entscheidet, ob das System nicht nur technisch läuft, sondern kreativ kalibrierbar wird.</p>
+      <p class="section-hint">Dieser Teil hilft, das System nicht nur technisch, sondern auch kreativ sinnvoll einzuschätzen.</p>
 
       <fieldset>
         <legend>Gibt es fertige Trailer plus zugrunde liegendes Ausgangsmaterial?</legend>
@@ -392,7 +392,7 @@
       <textarea id="special_rules" name="special_rules" placeholder="Bitte anonymisiert beschreiben."></textarea>
 
       <fieldset>
-        <legend>Liegt interne Freigabe für KI-Kalibrierung vor?</legend>
+        <legend>Gibt es intern grünes Licht, diese Referenzen für den Pilot zu nutzen?</legend>
         <div class="option-grid">
           <label class="option"><input type="radio" name="calibration_approval" value="Ja"> Ja</label>
           <label class="option"><input type="radio" name="calibration_approval" value="Teilweise"> Teilweise</label>
@@ -404,19 +404,19 @@
   </details>
 
   <section class="card">
-    <h2>Zusammenfassung vor dem Absenden</h2>
-    <p class="section-hint">Diese ChatGPT-kompatible Zusammenfassung wird mit übermittelt. Bitte prüfen, dass keine vertraulichen Kundennamen oder Inhalte enthalten sind.</p>
+    <h2>Kurzer Überblick vor dem Absenden</h2>
+    <p class="section-hint">Diese strukturierte Zusammenfassung geht mit an Wolf. Bitte kurz prüfen, dass keine vertraulichen Namen oder Inhalte enthalten sind.</p>
     <textarea class="summary-box" readonly></textarea>
     <div class="actions">
       <button type="button" class="secondary" data-copy-summary>Zusammenfassung kopieren</button>
-      <button type="submit">Fragebogen absenden</button>
+      <button type="submit">Angaben an Wolf senden</button>
     </div>
   </section>
 </form>
 </main>
 
 <footer>
-  <p>Mail-only UX: Die Ausfüllenden erhalten keinen Download-Workflow. Submissions werden über Netlify Forms verarbeitet.</p>
+  <p>Nach dem Absenden geht eine strukturierte Zusammenfassung an Wolf. Es gibt keinen Download- oder Exportaufwand für die Ausfüllenden.</p>
 </footer>
 <script src="/assets/questionnaire.js"></script>
 </body>
