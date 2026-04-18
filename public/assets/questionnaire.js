@@ -80,6 +80,7 @@
     const dlp = getRadio(form, "dlp");
     const mfa = getRadio(form, "mfa_ca");
     const compliance = text(form, "compliance_notes");
+    const localOfflineNotes = text(form, "local_offline_notes");
     const sponsor = text(form, "executive_sponsor");
     const itOwner = text(form, "it_owner");
     const champions = text(form, "champions");
@@ -121,11 +122,11 @@
     if (missingAdoption >= 4) adoption = "red";
     else if (missingAdoption >= 1) adoption = "yellow";
 
-    let route = "Weg A: Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
-    if (readiness === "green" && governance !== "red" && dataFoundation !== "red" && /integriert/i.test(mode)) route = "Weg A: Office-KI mit Microsoft 365 Copilot als kleine Pilotgruppe starten";
-    else if (readiness !== "red" && /chat/i.test(mode)) route = "Weg A: Office-KI zuerst mit Copilot Chat starten";
-    else if (readiness === "red" || governance === "red") route = "Weg A: Erst die wichtigsten Office-KI-Grundlagen klären";
-    else if (/gestuft/i.test(mode)) route = "Weg A: Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
+    let route = "Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
+    if (readiness === "green" && governance !== "red" && dataFoundation !== "red" && /integriert/i.test(mode)) route = "Office-KI mit Microsoft 365 Copilot als kleine Pilotgruppe starten";
+    else if (readiness !== "red" && /chat/i.test(mode)) route = "Office-KI zuerst mit Copilot Chat starten";
+    else if (readiness === "red" || governance === "red") route = "Erst die wichtigsten Office-KI-Grundlagen klären";
+    else if (/gestuft/i.test(mode)) route = "Gestuft starten – erst KI-Chat, danach Microsoft-365-Integration";
 
     if (!blockers.length) blockers.push("Aus den bisherigen Angaben ergibt sich kein Punkt, der den Start grundsätzlich aufhält.");
     if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Basisangaben erkennbar.");
@@ -137,7 +138,7 @@
 
     const summary = cleanLines([
       "PROJEKT",
-      "Weg A – Office-KI mit Microsoft Copilot",
+      "Teilprojekt Office-KI mit Microsoft Copilot",
       "Formular: copilot-integration-v1",
       "Version: copilot-integration-v2",
       "",
@@ -181,6 +182,7 @@
       `DLP: ${dlp || "—"}`,
       `MFA / Conditional Access: ${mfa || "—"}`,
       `Compliance: ${compliance || "—"}`,
+      `Eher lokal/offline zu lösen: ${localOfflineNotes || "—"}`,
       "",
       "PILOT & ALLTAG",
       `Sponsor: ${sponsor || "—"}`,
@@ -208,6 +210,7 @@
     const mainOutput = getRadio(form, "main_output");
     const materialTypes = getAll(form, "material_types");
     const projectSize = text(form, "project_size");
+    const hardwarePlan = getRadio(form, "hardware_plan");
     const offlineModel = getRadio(form, "offline_model");
     const reviewProcess = getAll(form, "review_process");
     const evaluator = text(form, "success_owner");
@@ -225,6 +228,10 @@
     const reviewToday = text(form, "review_today");
 
     const onlineWithData = getRadio(form, "online_with_customer_data");
+    const localAccessModel = getRadio(form, "local_access_model");
+    const localAiInterface = getAll(form, "local_ai_interface");
+    const ragSources = getAll(form, "rag_sources");
+    const networkBoundary = getRadio(form, "network_boundary");
     const importProcess = getAll(form, "import_process");
     const exportProcess = getAll(form, "export_process");
     const filevault = getRadio(form, "filevault");
@@ -232,6 +239,7 @@
     const deletionPolicy = getRadio(form, "deletion_policy");
     const backupPolicy = getRadio(form, "backup_policy");
     const updateStaging = getRadio(form, "update_staging");
+    const modelSource = getRadio(form, "model_source");
     const forbiddenData = getAll(form, "forbidden_data");
     const voicePolicy = getRadio(form, "voice_policy");
 
@@ -267,6 +275,8 @@
 
     let operations = "green";
     if (/ja/i.test(onlineWithData)) blockers.push("Bitte klären, ob echtes Projektmaterial wirklich offline bleiben soll.");
+    if (/KI-Server/i.test(localAccessModel) && unknown(networkBoundary)) unknowns.push("Bei lokaler KI-Server-Nutzung bitte die Netzwerkgrenze kurz klären.");
+    if (/KI-Server/i.test(localAccessModel) && /Noch offen/i.test(modelSource)) unknowns.push("Bei lokaler KI-Server-Nutzung bitte den Modell-/Updateweg kurz klären.");
     const missingOps = (unknown(onlineWithData) ? 1 : 0) + (!importProcess.length ? 1 : 0) + (!exportProcess.length ? 1 : 0) + (unknown(filevault) ? 1 : 0) + (!userRoles.length ? 1 : 0) + (unknown(deletionPolicy) ? 1 : 0) + (unknown(updateStaging) ? 1 : 0);
     if (/ja/i.test(onlineWithData) || missingOps >= 4) operations = "red";
     else if (missingOps >= 1) operations = "yellow";
@@ -276,24 +286,25 @@
     if (missingCalibration >= 5 || /nein/i.test(calibrationApproval)) calibration = "red";
     else if (missingCalibration >= 2) calibration = "yellow";
 
-    let route = "Weg B: Lokale Postproduktions-KI als Output-Pilot starten";
-    if (operations === "red") route = "Weg B: Erst die praktische Arbeitsweise im Büro klären";
-    else if (pilotClarity === "red") route = "Weg B: Erst Ziel und wichtigste Ergebnisse des Pilots schärfen";
-    else if (workflowFit === "red") route = "Weg B: Erst Anschluss an Schnitt, Timecode und Übergabe klären";
-    else if (calibration === "red") route = "Weg B: Erst Referenzen und Kriterien für gute Auswahl vorbereiten";
-    else if (pilotClarity === "green" && workflowFit !== "red" && operations !== "red") route = "Weg B: Lokale Postproduktions-KI als klaren Output-Pilot starten";
+    let route = "Lokale Postproduktions-KI als Output-Pilot starten";
+    if (operations === "red") route = "Erst die praktische Arbeitsweise im Büro klären";
+    else if (pilotClarity === "red") route = "Erst Ziel und wichtigste Ergebnisse des Pilots schärfen";
+    else if (workflowFit === "red") route = "Erst Anschluss an Schnitt, Timecode und Übergabe klären";
+    else if (calibration === "red") route = "Erst Referenzen und Kriterien für gute Auswahl vorbereiten";
+    else if (pilotClarity === "green" && workflowFit !== "red" && operations !== "red") route = "Lokale Postproduktions-KI als klaren Output-Pilot starten";
 
     if (!blockers.length) blockers.push("Aus den bisherigen Angaben ergibt sich kein Punkt, der den Start grundsätzlich aufhält.");
     if (!unknowns.length) unknowns.push("Keine wesentlichen offenen Punkte aus den Basisangaben erkennbar.");
     if (pilotClarity !== "green") next.push("Top-Aufgaben, wichtigstes Ergebnis, Referenzen und Erfolgskriterien finalisieren.");
     if (workflowFit !== "green") next.push("Schnitt-, Proxy-, Timecode- und Übergabefragen mit der Postproduktion klären.");
     if (operations !== "green") next.push("Offline-, Import-/Export-, FileVault-, Rechte- und Löschprozess einfach festlegen.");
+    if (/KI-Server/i.test(localAccessModel)) next.push("Für die lokale KI-Server-Idee: LAN-Zugriff, Bedienoberfläche und Modell-/Updateweg vor Kundendatenphase festlegen.");
     if (calibration !== "green") next.push("Referenzmaterial und Kriterien für gute Auswahl vorbereiten.");
     if (!next.length) next.push("Lokalen Pilot vorbereiten: Hardware, Staging, Dummy-Test; echte Projektmaterialien danach nur offline.");
 
     const summary = cleanLines([
       "PROJEKT",
-      "Weg B – Lokale Postproduktions-KI im Büro",
+      "Teilprojekt Lokale Postproduktions-KI im Büro",
       "Formular: postproduktion-ki-v1",
       "Version: postproduktion-ki-v1",
       "",
@@ -322,6 +333,7 @@
       "MATERIAL",
       `Materialarten: ${listOrDash(materialTypes)}`,
       `Projektgrößen: ${projectSize || "—"}`,
+      `Geplante Hardware: ${hardwarePlan || "—"}`,
       `Referenzprojekte: ${refProjects || "—"}`,
       "",
       "WORKFLOW",
@@ -338,6 +350,10 @@
       "BETRIEB & UMGANG MIT MATERIAL",
       `Offlinegrad: ${offlineModel || "—"}`,
       `Online mit Kundendaten: ${onlineWithData || "—"}`,
+      `Nutzungsmodell lokal: ${localAccessModel || "—"}`,
+      `Lokale Oberfläche / Serveridee: ${listOrDash(localAiInterface)}`,
+      `Lokale Wissensdatenbank / RAG-Quellen: ${listOrDash(ragSources)}`,
+      `Netzwerkgrenze: ${networkBoundary || "—"}`,
       `Import: ${listOrDash(importProcess)}`,
       `Export: ${listOrDash(exportProcess)}`,
       `FileVault: ${filevault || "—"}`,
@@ -345,6 +361,7 @@
       `Löschfrist: ${deletionPolicy || "—"}`,
       `Backup: ${backupPolicy || "—"}`,
       `Update-Staging: ${updateStaging || "—"}`,
+      `Modellquelle / Modell-Updates: ${modelSource || "—"}`,
       `Nicht vorgesehene Daten: ${listOrDash(forbiddenData)}`,
       `Layout-VO-Regel: ${voicePolicy || "—"}`,
       "",
@@ -364,8 +381,8 @@
       "1. eine Pilot-Roadmap,",
       "2. eine Hardwareempfehlung,",
       "3. eine Installationsreihenfolge,",
-      "4. ein Offline-/Staging-Konzept,",
-      "5. einen Toolstack-Vorschlag,",
+      "4. ein Offline-/Staging-Konzept inklusive lokaler KI-Server-Variante,",
+      "5. einen Toolstack-Vorschlag inklusive Modell-/Interface-Auswahl,",
       "6. Output-Spezifikationen,",
       "7. KPIs,",
       "8. Governance-Regeln,",
@@ -414,7 +431,7 @@
 
     box.innerHTML = `
       <h2>Kurzer Zwischenstand</h2>
-      <p><strong>Empfohlener Weg:</strong> ${result.route}</p>
+      <p><strong>Empfohlene Einordnung:</strong> ${result.route}</p>
       <div class="badges">${badges}</div>
       <p><strong>Nächster sinnvoller Schritt:</strong> ${result.next[0] || "—"}</p>
     `;

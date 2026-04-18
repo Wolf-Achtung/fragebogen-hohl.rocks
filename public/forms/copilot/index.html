@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Weg A – Office-KI mit Microsoft Copilot</title>
+  <title>Office-KI mit Microsoft Copilot</title>
   <link rel="stylesheet" href="/assets/forms.css">
 </head>
 <body>
 <header>
   <div class="hero">
-    <div class="eyebrow">Weg A · Office-KI · Microsoft 365</div>
+    <div class="eyebrow">Teilprojekt Office · Microsoft 365</div>
     <h1>Office-KI mit Microsoft Copilot</h1>
-    <p class="lead">Kurzer Orientierungsfragebogen für Office, Outlook, Teams, Meetings, Textarbeit und Organisation. Ziel ist eine schnelle Einschätzung: möglicher Startweg, Pilotgruppe, offene Punkte und nächste Schritte.</p>
-    <div class="notice"><strong>Damit es leicht und vertraulich bleibt:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte oder personenbezogenen Details eintragen. Rollen, Projekttypen oder Aliase reichen völlig.</div>
+    <p class="lead">Kurzer Orientierungsfragebogen für Office, Outlook, Teams, Meetings, Textarbeit und Organisation. Ziel ist eine schnelle Einschätzung: sinnvoller Start, Pilotgruppe, offene Punkte und nächste Schritte.</p>
     <nav class="nav" aria-label="Formularnavigation">
-      <a href="/">← Zur Auswahl der beiden Wege</a>
+      <a href="/">← Zur Projektübersicht</a>
     </nav>
   </div>
 </header>
@@ -23,8 +22,8 @@
 <form name="copilot-integration-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="copilotForm" data-questionnaire="true" data-form-type="copilot">
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="copilot-integration-v1">
-  <input type="hidden" name="form_version" value="copilot-integration-v2-weiche">
-  <input type="hidden" name="subject" data-remove-prefix value="Weg A Office-KI %{submissionId}">
+  <input type="hidden" name="form_version" value="copilot-integration-v2-lokalabgrenzung">
+  <input type="hidden" name="subject" data-remove-prefix value="Office-KI Copilot %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_readiness">
   <input type="hidden" name="auto_governance">
@@ -40,7 +39,7 @@
   <details open>
     <summary>Teil A – Was soll Office-KI zuerst verbessern?</summary>
     <div class="details-body">
-      <p class="section-hint">Dieser Teil reicht bereits für eine erste Empfehlung: welcher Einstieg sinnvoll ist, wer testen sollte und was vorher kurz geklärt werden muss.</p>
+      <p class="section-hint">Dieser Teil reicht bereits für eine erste Empfehlung: welcher Start sinnvoll ist, wer testen sollte und was vorher kurz geklärt werden muss.</p>
 <fieldset>
         <legend>Welcher Einstieg fühlt sich für die nächsten 3–6 Monate passend an? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
@@ -104,7 +103,7 @@
         </div>
       </fieldset>
 
-      <p id="integrationRequirementHint" class="notice hidden">Diese beiden Fragen helfen besonders, wenn integrierter Microsoft 365 Copilot oder ein gestufter Weg geplant ist.</p>
+      <p id="integrationRequirementHint" class="notice hidden">Diese beiden Fragen helfen besonders, wenn integrierter Microsoft 365 Copilot oder ein gestufter Start geplant ist.</p>
 
       <fieldset>
         <legend>Liegen die primären Postfächer der Pilotgruppe in Exchange Online?</legend>
@@ -240,7 +239,11 @@
       </fieldset>
 
       <label class="field-label" for="compliance_notes">Gibt es Kunden- oder Compliance-Vorgaben, die Copilot einschränken?</label>
-      <textarea id="compliance_notes" name="compliance_notes" placeholder="Bitte nur allgemein beschreiben, keine Kundennamen."></textarea>
+      <textarea id="compliance_notes" name="compliance_notes" placeholder="Kurz beschreiben, falls relevant."></textarea>
+
+      <label class="field-label" for="local_offline_notes">Gibt es Aufgaben oder Inhalte, die bewusst nicht in eine Cloud-KI sollen?</label>
+      <p class="help">Optional. Hilft bei der Abgrenzung zwischen Office-KI und lokaler KI, zum Beispiel bei Inhalten, die lokal oder offline bleiben sollen.</p>
+      <textarea id="local_offline_notes" name="local_offline_notes" placeholder="z. B. lokale Wissensdatenbank, Produktionsmaterial, bestimmte Projektarten."></textarea>
     </div>
   </details>
 

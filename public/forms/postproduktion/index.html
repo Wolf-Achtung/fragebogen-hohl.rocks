@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Weg B – Lokale Postproduktions-KI</title>
+  <title>Lokale Postproduktions-KI im Büro</title>
   <link rel="stylesheet" href="/assets/forms.css">
 </head>
 <body>
 <header>
   <div class="hero">
-    <div class="eyebrow">Weg B · Postproduktion · lokaler Pilot</div>
+    <div class="eyebrow">Teilprojekt Postproduktion · lokaler Pilot</div>
     <h1>Lokale Postproduktions-KI im Büro</h1>
-    <p class="lead">Kurzer Orientierungsfragebogen für einen lokalen KI-Pilot in der Postproduktion: Videoanalyse, Timecode-Clips, Transkription, Selects, Social-Cutdowns und Offline-Betrieb im Büro.</p>
-    <div class="notice"><strong>Damit es leicht und vertraulich bleibt:</strong> Bitte keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohdaten oder personenbezogenen Details eintragen. Projekt-Aliase reichen völlig.</div>
+    <p class="lead">Kurzer Orientierungsfragebogen für einen lokalen KI-Pilot in der Postproduktion: Videoanalyse, Timecode-Clips, Transkription, Selects, Social-Cutdowns, Offline-Betrieb und optional lokale KI-Server-Nutzung im Büro.</p>
     <nav class="nav" aria-label="Formularnavigation">
-      <a href="/">← Zur Auswahl der beiden Wege</a>
+      <a href="/">← Zur Projektübersicht</a>
     </nav>
   </div>
 </header>
@@ -23,8 +22,8 @@
 <form name="postproduktion-ki-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="postForm" data-questionnaire="true" data-form-type="postproduktion">
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="postproduktion-ki-v1">
-  <input type="hidden" name="form_version" value="postproduktion-ki-v1-weiche">
-  <input type="hidden" name="subject" data-remove-prefix value="Weg B Postproduktions-KI %{submissionId}">
+  <input type="hidden" name="form_version" value="postproduktion-ki-v1-lokaler-server">
+  <input type="hidden" name="subject" data-remove-prefix value="Lokale Postproduktions-KI %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_pilot_clarity">
   <input type="hidden" name="auto_workflow_fit">
@@ -92,6 +91,17 @@
       <textarea id="project_size" name="project_size" required></textarea>
 
       <fieldset>
+        <legend>Welche Hardware ist geplant oder realistisch?</legend>
+        <p class="help">Optional. Hilft bei der späteren Einschätzung, ob der Rechner eher Einzelplatz, Analyse-Station oder kleiner lokaler KI-Server wird.</p>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="hardware_plan" value="Mac mini M4 / 24–32 GB RAM"> Mac mini M4 / 24–32 GB RAM</label>
+          <label class="option"><input type="radio" name="hardware_plan" value="Mac mini M4 Pro / 48–64 GB RAM"> Mac mini M4 Pro / 48–64 GB RAM</label>
+          <label class="option"><input type="radio" name="hardware_plan" value="Mac Studio oder stärkeres lokales System"> Mac Studio oder stärkeres lokales System</label>
+          <label class="option"><input type="radio" name="hardware_plan" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
         <legend>Wie soll nach der Einrichtung mit Internet und Projektmaterial umgegangen werden? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input required type="radio" name="offline_model" value="Vollständig offline"> Vollständig offline</label>
@@ -117,7 +127,7 @@
       <input id="success_owner" name="success_owner" type="text" required placeholder="Name oder Rolle">
 
       <label class="field-label" for="reference_projects">Welche 2–3 Referenzprojekte stehen bereit? <span class="required-note">für Roadmap</span></label>
-      <p class="help">Bitte nur Alias/Projekttyp, keine Kundennamen oder unveröffentlichten Titel.</p>
+      <p class="help">Kurz beschreiben, welche Referenzen für den Pilot bereitstehen.</p>
       <textarea id="reference_projects" name="reference_projects" required></textarea>
 
       <label class="field-label" for="success_criteria">Was wäre nach 4–6 Wochen ein gutes Zeichen? <span class="required-note">für Roadmap</span></label>
@@ -224,6 +234,55 @@
       </fieldset>
 
       <fieldset>
+        <legend>Wie soll der lokale KI-Rechner grundsätzlich genutzt werden?</legend>
+        <p class="help">Optional. Die Idee aus lokalen KI-Server-Setups: Der Rechner kann direkt bedient werden oder im internen Netz für freigegebene Geräte arbeiten. Bei echtem Projektmaterial bleibt die Offline-Regel entscheidend.</p>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="local_access_model" value="Direkt am Mac / Einzelplatz"> Direkt am Mac / Einzelplatz</label>
+          <label class="option"><input type="radio" name="local_access_model" value="Bildschirmfreigabe nur für Setup oder Dummy-Material"> Bildschirmfreigabe nur für Setup oder Dummy-Material</label>
+          <label class="option"><input type="radio" name="local_access_model" value="Lokaler KI-Server im internen Büro-Netz"> Lokaler KI-Server im internen Büro-Netz</label>
+          <label class="option"><input type="radio" name="local_access_model" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Welche lokale Oberfläche oder Server-Idee wäre interessant?</legend>
+        <p class="help">Optional und nur als Orientierung. Die konkrete Toolwahl passiert später nach Pilotziel, Hardware und Sicherheitsmodell.</p>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="LM Studio direkt am Mac"> LM Studio direkt am Mac</label>
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="LM Studio als lokaler Server/API"> LM Studio als lokaler Server/API</label>
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="Chatbox oder vergleichbare Chat-Oberfläche"> Chatbox oder vergleichbare Chat-Oberfläche</label>
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="Open WebUI"> Open WebUI</label>
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="AnythingLLM / lokale Wissensdatenbank"> AnythingLLM / lokale Wissensdatenbank</label>
+          <label class="option"><input type="checkbox" name="local_ai_interface" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wäre eine lokale Wissensdatenbank hilfreich?</legend>
+        <p class="help">Optional. Gemeint ist eine lokale Suche/Frage-Antwort-Funktion über freigegebene Ordner, zum Beispiel Transkripte, Guidelines oder Projektunterlagen – ohne Cloud-Upload.</p>
+        <div class="option-grid">
+          <label class="option"><input type="checkbox" name="rag_sources" value="Skripte / Treatments"> Skripte / Treatments</label>
+          <label class="option"><input type="checkbox" name="rag_sources" value="Transkripte / Untertitel"> Transkripte / Untertitel</label>
+          <label class="option"><input type="checkbox" name="rag_sources" value="Interne Trailer-/Style-Guidelines"> Interne Trailer-/Style-Guidelines</label>
+          <label class="option"><input type="checkbox" name="rag_sources" value="Kundenfeedback / Änderungsrunden"> Kundenfeedback / Änderungsrunden</label>
+          <label class="option"><input type="checkbox" name="rag_sources" value="Projektdokumentation"> Projektdokumentation</label>
+          <label class="option"><input type="checkbox" name="rag_sources" value="Derzeit nicht wichtig"> Derzeit nicht wichtig</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie eng soll der Netzwerkzugriff begrenzt werden?</legend>
+        <p class="help">Optional. Hilft, den Unterschied zwischen Einzelplatz, internem KI-Server und komplett offlineem Betrieb sauber zu planen.</p>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="network_boundary" value="Nur direkt am Mac, kein LAN-Zugriff"> Nur direkt am Mac, kein LAN-Zugriff</label>
+          <label class="option"><input type="radio" name="network_boundary" value="Internes LAN nur vor Kundendatenphase"> Internes LAN nur vor Kundendatenphase</label>
+          <label class="option"><input type="radio" name="network_boundary" value="Internes LAN für freigegebene Nicht-Kundendaten"> Internes LAN für freigegebene Nicht-Kundendaten</label>
+          <label class="option"><input type="radio" name="network_boundary" value="Kontrollierter LAN-Zugriff für freigegebene Geräte, aber kein Internet"> Kontrollierter LAN-Zugriff für freigegebene Geräte, aber kein Internet</label>
+          <label class="option"><input type="radio" name="network_boundary" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
         <legend>Wie kommen Daten auf das System? <span class="required-note">für Roadmap</span></legend>
         <div class="option-grid">
           <label class="option"><input type="checkbox" name="import_process" value="Verschlüsselte SSD"> Verschlüsselte SSD</label>
@@ -293,6 +352,17 @@
           <label class="option"><input type="radio" name="update_staging" value="Über separates Staging"> Über separates Staging</label>
           <label class="option"><input type="radio" name="update_staging" value="Nur durch Admin"> Nur durch Admin</label>
           <label class="option"><input type="radio" name="update_staging" value="Noch offen"> Noch offen</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wie sollen KI-Modelle auf das System kommen?</legend>
+        <p class="help">Optional. Modelle können während Setup/Staging geladen und danach offline genutzt werden. Spätere Updates sollten kontrolliert passieren.</p>
+        <div class="option-grid">
+          <label class="option"><input type="radio" name="model_source" value="Download nur während Einrichtung / Staging"> Download nur während Einrichtung / Staging</label>
+          <label class="option"><input type="radio" name="model_source" value="Vorbereitete Modelle auf separatem Datenträger"> Vorbereitete Modelle auf separatem Datenträger</label>
+          <label class="option"><input type="radio" name="model_source" value="LM Studio / Hugging Face nur vor Kundendatenphase"> LM Studio / Hugging Face nur vor Kundendatenphase</label>
+          <label class="option"><input type="radio" name="model_source" value="Noch offen"> Noch offen</label>
         </div>
       </fieldset>
 
@@ -377,7 +447,7 @@
       </fieldset>
 
       <label class="field-label" for="good_selection">Was gilt bei euch als „gute Auswahl“?</label>
-      <textarea id="good_selection" name="good_selection" placeholder="3–5 Kriterien, keine Kundennamen."></textarea>
+      <textarea id="good_selection" name="good_selection" placeholder="3–5 Kriterien."></textarea>
 
       <label class="field-label" for="bad_selection">Was wäre eine klar schlechte Auswahl?</label>
       <textarea id="bad_selection" name="bad_selection"></textarea>
