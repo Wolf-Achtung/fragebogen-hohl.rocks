@@ -1,14 +1,24 @@
-# Fragebogen-MVP v3 – freundlichere Fassung
+# Fragebogen-MVP v4 – Auswahlseite + keine Rückfrage-E-Mail-Felder
 
-Dieses Paket enthält die entschärfte, freundlichere Version der zwei KI-Fragebögen.
+Diese Fassung setzt die gewünschte Weiche vor die beiden Fragebögen und entfernt die Rückmeldemail-/Rückfragen-E-Mail-Felder aus beiden Formularen.
 
-## Zwei klar getrennte Wege
+## Einstieg / Weiche
+
+Die Ausfüllenden sollen zuerst diese Seite öffnen:
+
+```text
+https://fragebogen.hohl.rocks/
+```
+
+Dort werden beide Wege klar getrennt erklärt:
 
 - **Weg A: Office-KI mit Microsoft Copilot**  
-  Für E-Mail, Teams, Meetings, Texte, Präsentationen, Briefings, Suche und Organisation.
+  Ziel: Klären, ob und wie Copilot sinnvoll in Office, Outlook, Teams, Meetings, Textarbeit und Organisation starten kann.  
+  Direktlink: `https://fragebogen.hohl.rocks/forms/copilot/`
 
 - **Weg B: Lokale Postproduktions-KI im Büro**  
-  Für Videoanalyse, Timecode-Clips, Transkription, Selects, Quote-Findung, Social-Cutdowns und lokale Tests.
+  Ziel: Klären, welche lokalen KI-Hilfen für Videoanalyse, Timecode-Clips, Transkription, Selects und Social-Cutdowns im Pilot gebraucht werden.  
+  Direktlink: `https://fragebogen.hohl.rocks/forms/postproduktion/`
 
 ## Enthaltene Struktur
 
@@ -29,14 +39,22 @@ Copilot bleibt stabil:
 
 ```text
 copilot-integration-v1
-form_version = copilot-integration-v2-soft
+form_version = copilot-integration-v2-weiche
 ```
 
-Postproduktion:
+Postproduktion bleibt stabil:
 
 ```text
 postproduktion-ki-v1
+form_version = postproduktion-ki-v1-weiche
 ```
+
+## Wichtig
+
+- Keine E-Mail-Felder für Rückfragen mehr in den Formularen.
+- Keine Uploadfelder.
+- Keine Kundennamen, unveröffentlichten Titel, Drehbuchinhalte, Rohmaterialdaten oder personenbezogenen Details eintragen lassen.
+- Benachrichtigung weiterhin direkt an `wolf@hohl.rocks`, nicht über Weiterleitung.
 
 ## Netlify-Check nach Deploy
 
@@ -45,7 +63,6 @@ postproduktion-ki-v1
 3. Deploys → Trigger deploy → Clear cache and deploy site.
 4. Project configuration → Notifications → Form submission notifications.
 5. Empfänger direkt: `wolf@hohl.rocks`.
-6. Nicht über die Weiterleitung `fragebogen@hohl.rocks`.
 
 ## Test
 
@@ -62,13 +79,5 @@ Prüfen:
 - Mail kommt bei `wolf@hohl.rocks` an
 - `chatgpt_summary` ist enthalten
 - `auto_route` ist enthalten
-- `auto_to_clarify`, `auto_unknowns`, `auto_next_steps` sind enthalten
-
-## Stiländerung in v3
-
-- wärmere Optik
-- weichere Zwischenbewertung
-- keine harte Audit-Sprache
-- klare Trennung in Weg A und Weg B
-- weniger Alarmton bei Sicherheitsthemen
-- weiterhin keine Uploadfelder und keine vertraulichen Inhalte im Formular
+- jeweilige Ampeln sind enthalten
+- kein `email`-Feld wird im Formular angezeigt oder übermittelt
