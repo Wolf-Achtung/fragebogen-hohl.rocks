@@ -61,6 +61,7 @@
   }
 
   function evaluateCopilot(form) {
+    const individualNotes = collectIndividualNotes(form);
     const mode = getRadio(form, "target_mode");
     const groups = getAll(form, "pilot_groups");
     const pilotSize = getRadio(form, "pilot_size");
@@ -193,6 +194,9 @@
       `Erfolgsmessung: ${listOrDash(metrics)}`,
       `Skalierungsentscheidung: ${scaleDecision || "—"}`,
       "",
+      "ERGÄNZENDE HINWEISE ZU EINZELNEN FRAGEN",
+      individualNotes || "—",
+      "",
       "AUFTRAG AN CHATGPT",
       "Bitte erstelle daraus:",
       "1. eine priorisierte Implementierungsstrategie,",
@@ -202,10 +206,11 @@
       "5. einen Pilot- und Schulungsplan."
     ]);
 
-    return { route, readiness, governance, dataFoundation, adoption, blockers, unknowns, next, summary };
+    return { route, readiness, governance, dataFoundation, adoption, blockers, unknowns, next, individualNotes, summary };
   }
 
   function evaluatePost(form) {
+    const individualNotes = collectIndividualNotes(form);
     const useCases = getAll(form, "top_use_cases");
     const mainOutput = getRadio(form, "main_output");
     const materialTypes = getAll(form, "material_types");
@@ -376,6 +381,9 @@
       `Sonderregeln: ${specialRules || "—"}`,
       `Freigabe Kalibrierung: ${calibrationApproval || "—"}`,
       "",
+      "ERGÄNZENDE HINWEISE ZU EINZELNEN FRAGEN",
+      individualNotes || "—",
+      "",
       "AUFTRAG AN CHATGPT",
       "Bitte erstelle daraus:",
       "1. eine Pilot-Roadmap,",
@@ -389,13 +397,14 @@
       "9. spätere Avid-/Windows-Integrationsoptionen."
     ]);
 
-    return { route, pilotClarity, workflowFit, operations, calibration, blockers, unknowns, next, summary };
+    return { route, pilotClarity, workflowFit, operations, calibration, blockers, unknowns, next, individualNotes, summary };
   }
 
   function render(form, result) {
     const box = form.querySelector(".assessment");
     const summaryField = form.querySelector(".summary-box");
     if (!box) return;
+    setHidden(form, "individual_notes", result.individualNotes || collectIndividualNotes(form));
 
     let badges = "";
     if (form.dataset.formType === "copilot") {
@@ -438,6 +447,198 @@
   }
 
 
+
+  function normalizeQuestionText(text) {
+    return (text || "")
+      .replace(/\s+/g, " ")
+      .replace(" öffnen", "")
+      .replace(" schließen", "")
+      .trim();
+  }
+
+  function slugify(text) {
+    return normalizeQuestionText(text)
+      .toLowerCase()
+      .replace(/[ä]/g, "ae").replace(/[ö]/g, "oe").replace(/[ü]/g, "ue").replace(/[ß]/g, "ss")
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "")
+      .slice(0, 60) || "frage";
+  }
+
+  function helpTextForQuestion(question, formType) {
+    const q = normalizeQuestionText(question).toLowerCase();
+
+    const shared = [
+      [/ziel|einstieg|start|pilot/i, "Hilft, aus den Antworten einen realistischen Startplan zu machen: Was kann sofort beginnen, was braucht vorher noch Klärung?"],
+      [/bereiche|gruppen|nutzer|personen/i, "Hilft, den Pilot nicht zu groß und nicht zu abstrakt zu planen. Eine kleine, passende Startgruppe liefert schneller brauchbares Feedback."],
+      [/erfolg|90|4–6|messen|kriterien/i, "Hilft, später nicht nur Technik zu bewerten, sondern echten Nutzen: Zeitgewinn, bessere Ergebnisse, weniger Suchaufwand oder bessere Übergaben."],
+      [/lizenz|microsoft|entra|exchange|apps|teams|transkription/i, "Hilft, die technischen Mindestvoraussetzungen früh zu erkennen, ohne daraus einen IT-Fragebogen zu machen."],
+      [/daten|inhalte|freigabe|sensible|labels|dlp|mfa|compliance/i, "Hilft, Nutzen und Sicherheit zusammen zu denken: Die KI soll auf hilfreiche Informationen zugreifen, aber nicht unkontrolliert auf alles."],
+      [/sponsor|owner|champion|schulung|support|skalierung/i, "Hilft, den Pilot im Alltag tragfähig zu machen: Wer entscheidet, wer unterstützt, wer sammelt Feedback?"],
+      [/material|prores|proxy|timecode|avid|schnitt|austausch|review/i, "Hilft, die KI-Ergebnisse so zu planen, dass sie wirklich in Schnitt, Review und Postproduktion weiterverwendet werden können."],
+      [/offline|filevault|import|export|rollen|lösch|backup|update|netzwerk/i, "Hilft, den lokalen Betrieb sauber aufzusetzen: Daten hinein, Ergebnisse heraus, Updates, Rechte und Löschung."],
+      [/hardware|server|lm studio|webui|anything|wissensdatenbank|rag|modelle/i, "Hilft, zu entscheiden, ob der Rechner nur als Einzelplatz dient oder auch als lokaler KI-Server beziehungsweise Wissenssystem im Büro."],
+      [/referenz|trailer|skript|transkript|social|feedback|auswahl|kalibrierung/i, "Hilft, die Ergebnisse später fachlich zu bewerten: Was gilt bei euch als gute Auswahl, was wäre unbrauchbar?"]
+    ];
+
+    for (const [pattern, text] of shared) {
+      if (pattern.test(q)) return text;
+    }
+    return formType === "postproduktion"
+      ? "Hilft, aus dem späteren Ergebnis eine konkrete Pilot-Roadmap für lokale Postproduktions-KI abzuleiten."
+      : "Hilft, aus dem späteren Ergebnis eine konkrete Copilot-Roadmap abzuleiten.";
+  }
+
+  function addHelpAndNote(afterElement, questionText, form, index) {
+    if (!afterElement || afterElement.dataset.enhancedQuestion === "true") return;
+    afterElement.dataset.enhancedQuestion = "true";
+
+    const formType = form.dataset.formType || "fragebogen";
+    const base = `${formType}_${index}_${slugify(questionText)}`;
+
+    const help = document.createElement("details");
+    help.className = "question-help";
+    help.innerHTML = `<summary>Warum fragen wir das?</summary><div class="details-body"><p>${helpTextForQuestion(questionText, formType)}</p></div>`;
+
+    const extra = document.createElement("details");
+    extra.className = "question-extra";
+    extra.innerHTML = `<summary>Weitere Angaben oder Besonderheiten</summary>
+      <div class="details-body">
+        <textarea name="note_${base}" data-individual-note data-question="${questionText.replace(/"/g, "&quot;")}" placeholder="Optional: Ergänzungen, Besonderheiten, Unsicherheiten oder Beispiele zu dieser Frage."></textarea>
+      </div>`;
+
+    afterElement.insertAdjacentElement("afterend", extra);
+    afterElement.insertAdjacentElement("afterend", help);
+  }
+
+  function enhanceQuestions(form) {
+    let index = 1;
+
+    form.querySelectorAll("fieldset").forEach(fieldset => {
+      if (fieldset.closest(".question-extra") || fieldset.closest(".question-help")) return;
+      const legend = fieldset.querySelector("legend");
+      const questionText = legend ? normalizeQuestionText(legend.textContent) : `Frage ${index}`;
+      addHelpAndNote(fieldset, questionText, form, index++);
+    });
+
+    form.querySelectorAll("label.field-label").forEach(label => {
+      const forId = label.getAttribute("for");
+      let target = forId ? form.querySelector(`#${CSS.escape(forId)}`) : null;
+      if (!target) target = label.nextElementSibling;
+      if (!target || target.closest(".question-extra") || target.closest(".question-help")) return;
+      const questionText = normalizeQuestionText(label.textContent);
+      addHelpAndNote(target, questionText, form, index++);
+    });
+  }
+
+  function collectIndividualNotes(form) {
+    const notes = [];
+    form.querySelectorAll("[data-individual-note]").forEach(el => {
+      const value = (el.value || "").trim();
+      if (!value) return;
+      const question = el.getAttribute("data-question") || el.name || "Frage";
+      notes.push(`- ${question}: ${value}`);
+    });
+    return notes.join("\n");
+  }
+
+  function getDraftKey(form) {
+    const formName = form.querySelector('[name="form-name"]')?.value || form.getAttribute("name") || "fragebogen";
+    const version = form.querySelector('[name="form_version"]')?.value || "v1";
+    return `fragebogen_draft_${formName}_${version}_${location.pathname}`;
+  }
+
+  function getDraftFields(form) {
+    return Array.from(form.elements).filter(el => {
+      if (!el.name || el.disabled) return false;
+      if (["hidden", "submit", "button"].includes(el.type)) return false;
+      if (el.name === "bot-field") return false;
+      if (el.classList.contains("summary-box")) return false;
+      return true;
+    });
+  }
+
+  function readDraftData(form) {
+    const data = {};
+    getDraftFields(form).forEach(el => {
+      if (el.type === "checkbox" || el.type === "radio") {
+        data[el.name] = data[el.name] || {};
+        data[el.name][el.value] = el.checked;
+      } else {
+        data[el.name] = el.value || "";
+      }
+    });
+    return data;
+  }
+
+  function applyDraftData(form, data) {
+    if (!data || typeof data !== "object") return;
+    getDraftFields(form).forEach(el => {
+      const saved = data[el.name];
+      if (saved === undefined) return;
+      if (el.type === "checkbox" || el.type === "radio") {
+        el.checked = !!(saved && saved[el.value]);
+      } else {
+        el.value = saved;
+      }
+    });
+  }
+
+  function saveDraft(form) {
+    try {
+      const payload = { savedAt: new Date().toISOString(), data: readDraftData(form) };
+      localStorage.setItem(getDraftKey(form), JSON.stringify(payload));
+      const status = form.querySelector("[data-draft-status]");
+      if (status) {
+        const time = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+        status.textContent = `Zwischenstand automatisch gespeichert (${time}).`;
+      }
+    } catch (e) {
+      const status = form.querySelector("[data-draft-status]");
+      if (status) status.textContent = "Automatisches Speichern ist in diesem Browser nicht verfügbar.";
+    }
+  }
+
+  function restoreDraft(form) {
+    try {
+      const raw = localStorage.getItem(getDraftKey(form));
+      if (!raw) return;
+      const payload = JSON.parse(raw);
+      applyDraftData(form, payload.data);
+      const status = form.querySelector("[data-draft-status]");
+      if (status && payload.savedAt) {
+        const date = new Date(payload.savedAt);
+        const label = date.toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" });
+        status.textContent = `Zwischenstand von ${label} wiederhergestellt.`;
+      }
+    } catch (e) {
+      // Ignore broken drafts gracefully.
+    }
+  }
+
+  function clearDraft(form) {
+    try {
+      localStorage.removeItem(getDraftKey(form));
+      getDraftFields(form).forEach(el => {
+        if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+        else el.value = "";
+      });
+      const status = form.querySelector("[data-draft-status]");
+      if (status) status.textContent = "Zwischenstand gelöscht.";
+      updateForm(form);
+    } catch (e) {
+      alert("Der Zwischenstand konnte nicht gelöscht werden.");
+    }
+  }
+
+  function debounce(fn, wait) {
+    let timer;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, arguments), wait);
+    };
+  }
+
   function validateRequiredGroups(form) {
     const type = form.dataset.formType;
     const groups = type === "copilot"
@@ -478,10 +679,28 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("form[data-questionnaire='true']").forEach(form => {
+      enhanceQuestions(form);
+      restoreDraft(form);
+
+      const debouncedSave = debounce(() => saveDraft(form), 500);
+
       updateForm(form);
-      form.addEventListener("input", () => updateForm(form));
-      form.addEventListener("change", () => updateForm(form));
-      form.addEventListener("submit", (event) => { updateForm(form); if (!validateRequiredGroups(form)) event.preventDefault(); });
+      form.addEventListener("input", () => { updateForm(form); debouncedSave(); });
+      form.addEventListener("change", () => { updateForm(form); debouncedSave(); });
+      form.addEventListener("submit", (event) => {
+        updateForm(form);
+        saveDraft(form);
+        if (!validateRequiredGroups(form)) event.preventDefault();
+      });
+
+      const clearBtn = form.querySelector("[data-clear-draft]");
+      if (clearBtn) {
+        clearBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          if (confirm("Zwischenstand in diesem Browser wirklich löschen?")) clearDraft(form);
+        });
+      }
+
       const copyBtn = form.querySelector("[data-copy-summary]");
       if (copyBtn) {
         copyBtn.addEventListener("click", async (e) => {

@@ -65,3 +65,19 @@ form_version = copilot-integration-v2-lokalabgrenzung
 ## Inhaltliche Ergänzung
 
 Der Postproduktions-Fragebogen berücksichtigt zusätzlich die mögliche Nutzung als lokaler KI-Server im internen Büro-Netz, zum Beispiel mit lokaler Oberfläche, LM-Studio-/Server-Idee, Open-WebUI-/AnythingLLM-ähnlichen Oberflächen oder lokaler Wissensdatenbank. Die konkrete Tool- und Modellwahl soll später aus den Antworten abgeleitet werden.
+
+
+## v7-Ergänzungen
+
+Diese Fassung ergänzt:
+
+- automatisches Zwischenspeichern im Browser per `localStorage`
+- Wiederherstellung des Zwischenstands beim erneuten Öffnen derselben Formularseite
+- Button „Zwischenstand löschen“
+- aufklappbare Erläuterung „Warum fragen wir das?“ an den Fragen
+- optionale Freitextfelder „Weitere Angaben oder Besonderheiten“ an den Fragen
+- Aggregation aller individuellen Hinweise in das statische Hidden Field `individual_notes`
+- Aufnahme dieser Hinweise in `chatgpt_summary`
+
+Hinweis zur Netlify-Robustheit:
+Die sichtbaren Freitextfelder werden clientseitig ergänzt. Damit die Inhalte zuverlässig in der Netlify-Mail landen, werden sie zusätzlich gesammelt in `individual_notes` und `chatgpt_summary` geschrieben.

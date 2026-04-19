@@ -22,7 +22,7 @@
 <form name="copilot-integration-v1" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/danke/" id="copilotForm" data-questionnaire="true" data-form-type="copilot">
   <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
   <input type="hidden" name="form-name" value="copilot-integration-v1">
-  <input type="hidden" name="form_version" value="copilot-integration-v2-lokalabgrenzung">
+  <input type="hidden" name="form_version" value="copilot-integration-v2-autosave-notes">
   <input type="hidden" name="subject" data-remove-prefix value="Office-KI Copilot %{submissionId}">
   <input type="hidden" name="auto_route">
   <input type="hidden" name="auto_readiness">
@@ -32,7 +32,16 @@
   <textarea name="auto_to_clarify" hidden></textarea>
   <textarea name="auto_unknowns" hidden></textarea>
   <textarea name="auto_next_steps" hidden></textarea>
+  <textarea name="individual_notes" hidden></textarea>
   <textarea name="chatgpt_summary" hidden></textarea>
+
+  <div class="draft-bar" aria-live="polite">
+    <div>
+      <strong>Zwischenstand</strong>
+      <span data-draft-status>Automatisches Speichern ist aktiv. Der Entwurf bleibt in diesem Browser erhalten.</span>
+    </div>
+    <button type="button" class="secondary small-button" data-clear-draft>Zwischenstand löschen</button>
+  </div>
 
   <div class="assessment" aria-live="polite"></div>
 
